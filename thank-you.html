@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You – ComSure</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23060D18'/%3E%3Cpath d='M16 4L6 8v8c0 6.6 4.3 12.8 10 15 5.7-2.2 10-8.4 10-15V8L16 4z' fill='%2329ABE2'/%3E%3Cpath d='M12 15.5a4 4 0 014-4 4 4 0 014 4' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M13.5 17.5a3 3 0 015 0' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='20' r='1.2' fill='white'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    :root {
+      --navy:  #060D18;
+      --blue:  #29ABE2;
+      --green: #1A9E5C;
+      --white: #ffffff;
+      --muted: #71717a;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      padding: 24px 32px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav__logo { height: 38px; width: auto; opacity: 0.65; }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px 80px;
+    }
+    .card {
+      max-width: 560px; width: 100%;
+      text-align: center;
+    }
+
+    /* Check icon */
+    .check-wrap {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(26,158,92,.1);
+      border: 1px solid rgba(26,158,92,.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 36px;
+      animation: pop-in .5s cubic-bezier(.34,1.56,.64,1) forwards;
+    }
+    .check-wrap svg { color: #4ade80; }
+    @keyframes pop-in {
+      0%   { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    /* Text */
+    .card__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+      background: rgba(26,158,92,.08); border: 1px solid rgba(26,158,92,.2);
+      color: #4ade80; margin-bottom: 24px;
+    }
+    .card__eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.2);
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow: 0 0 0 3px rgba(74,222,128,.2); }
+      50%      { box-shadow: 0 0 0 7px rgba(74,222,128,.08); }
+    }
+
+    .card__title {
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 700; letter-spacing: -.035em;
+      line-height: 1.1; margin-bottom: 20px;
+    }
+    .card__title em { font-style: normal; color: var(--blue); }
+
+    .card__sub {
+      font-size: 17px; color: rgba(255,255,255,.45);
+      line-height: 1.8; max-width: 440px; margin: 0 auto 48px;
+    }
+
+    /* What happens next */
+    .next-steps {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px; padding: 32px;
+      text-align: left; margin-bottom: 40px;
+    }
+    .next-steps__title {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: rgba(255,255,255,.3);
+      margin-bottom: 24px;
+    }
+    .step {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .step:first-of-type { padding-top: 0; }
+    .step__num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(41,171,226,.1); border: 1px solid rgba(41,171,226,.2);
+      color: var(--blue); font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .step__title { font-size: 14px; font-weight: 700; margin-bottom: 4px; letter-spacing: -.01em; }
+    .step__text  { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; }
+
+    /* CTA */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(41,171,226,0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(41,171,226,0.45);
+      color: var(--white);
+      padding: 16px 32px; border-radius: 8px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      box-shadow: 0 4px 24px rgba(41,171,226,.2), inset 0 1px 0 rgba(255,255,255,.1);
+      transition: all .2s; text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: rgba(41,171,226,0.28);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(41,171,226,.3);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #040912;
+      border-top: 1px solid rgba(255,255,255,.04);
+      padding: 28px 32px; text-align: center;
+    }
+    .footer img { height: 20px; opacity: .22; margin-bottom: 10px; display: inline-block; }
+    .footer p   { font-size: 12px; color: rgba(255,255,255,.14); letter-spacing: .01em; }
+    .footer a   { color: rgba(41,171,226,.6); text-decoration: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      .nav { padding: 18px 20px; }
+      .nav__logo { height: 28px; }
+      .card__sub { font-size: 15px; }
+      .next-steps { padding: 24px 20px; }
+      .btn-primary { width: 100%; justify-content: center; }
+      .footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <img src="Comsure Logo PNG-01.png" alt="ComSure" class="nav__logo" />
+  </nav>
+
+  <main class="main">
+    <div class="card">
+
+      <div class="check-wrap">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <div class="card__eyebrow">
+        <div class="card__eyebrow-dot"></div>
+        Submission received
+      </div>
+
+      <h1 class="card__title">You're in good hands.<br/><em>We'll be in touch shortly.</em></h1>
+
+      <p class="card__sub">
+        One of our team will review your business risk assessment and reach out within one working day with your personalised results.
+      </p>
+
+      <div class="next-steps">
+        <div class="next-steps__title">What happens next</div>
+
+        <div class="step">
+          <div class="step__num">1</div>
+          <div>
+            <div class="step__title">We review your assessment</div>
+            <div class="step__text">Our team looks at your business type, internet reliance, and risk level to understand your exposure.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step__num">2</div>
+          <div>
+            <div class="step__title">You receive your risk report</div>
+            <div class="step__text">We'll send a personalised breakdown of how much downtime could cost you — and how ComSure fixes it.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step__num">3</div>
+          <div>
+            <div class="step__title">No commitment, no pressure</div>
+            <div class="step__text">A quick call to walk you through your options. You decide if ComSure is right for your business.</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to homepage
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <img src="comsure-logo.jpeg" alt="ComSure" /><br/>
+    <p>&copy; 2026 ComSure. Business connectivity solutions for UK businesses. &nbsp;·&nbsp; <a href="https://comsure.uk">comsure.uk</a></p>
+  </footer>
+
+</body>
+</html>
