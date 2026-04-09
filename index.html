@@ -599,10 +599,18 @@
       .nav { padding: 14px 16px; }
       .nav__logo { height: 26px; }
 
-      /* Shield: column layout — badges wrap below */
-      .shield-scene  { flex-direction: column; align-items: center; gap: 14px; }
-      .shield-right  { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; }
-      .orbit-badge   { padding: 8px 12px; font-size: 10px; }
+      /* Shield: column layout — badges in 2x2 grid below */
+      .shield-scene  { flex-direction: column; align-items: center; gap: 0; }
+      /* Extra space so the "Protected" label doesn't overlap badges */
+      .shield-left   { margin-bottom: 48px; }
+      .shield-right  {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+        max-width: 340px;
+      }
+      .orbit-badge   { padding: 10px 12px; font-size: 10px; justify-content: center; }
 
       /* Hide connecting lines — wrong direction in column layout */
       .orbit-badge::before { display: none; }
