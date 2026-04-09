@@ -687,6 +687,16 @@
     .section__sub { font-size: 18px; line-height: 1.85; color: var(--muted); }
 
     /* ── FORM SECTION ── */
+    .section--form-bg {
+      background: #07101d;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
     .section--ice { background: #f5f5f6; }
     .form-wrap {
       border-radius: 20px; padding: 64px 60px;
@@ -1007,8 +1017,9 @@
 
 
 <!-- ─── FORM ─── -->
-<section class="section section--ice" id="form">
-  <div class="wrap--sm">
+<section class="section section--form-bg" id="form">
+  <canvas class="form-canvas" id="formCanvas"></canvas>
+  <div class="wrap--sm" style="position:relative;z-index:1;">
     <iframe
       src="https://api.leadconnectorhq.com/widget/form/Qypj0Pra3ullEOhKcuuT"
       style="width:100%;height:846px;border:none;border-radius:16px;display:block;"
@@ -1254,6 +1265,97 @@
     btn.disabled = true;
     setTimeout(() => { window.location.href = 'thank-you.html'; }, 600);
   }
+
+  // ── FORM SECTION ANIMATION ──
+  (function () {
+    const canvas = document.getElementById('formCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, orbs, particles;
+
+    const BLUE  = [41, 171, 226];
+    const TEAL  = [23, 85, 84];
+    const WHITE = [255, 255, 255];
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function init() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+
+      // Large slow gradient orbs
+      orbs = Array.from({ length: 5 }, () => ({
+        x: rand(0, W), y: rand(0, H),
+        r: rand(180, 320),
+        vx: rand(-0.12, 0.12), vy: rand(-0.08, 0.1),
+        color: Math.random() > 0.5 ? BLUE : TEAL,
+        alpha: rand(0.04, 0.10)
+      }));
+
+      // Small fast particles
+      particles = Array.from({ length: 28 }, () => ({
+        x: rand(0, W), y: rand(0, H),
+        r: rand(1, 2.5),
+        vx: rand(-0.3, 0.3), vy: rand(-0.3, 0.3),
+        alpha: rand(0.15, 0.45),
+        color: Math.random() > 0.3 ? BLUE : WHITE
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Draw orbs
+      orbs.forEach(o => {
+        o.x += o.vx; o.y += o.vy;
+        if (o.x < -o.r) o.x = W + o.r;
+        if (o.x > W + o.r) o.x = -o.r;
+        if (o.y < -o.r) o.y = H + o.r;
+        if (o.y > H + o.r) o.y = -o.r;
+
+        const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+        g.addColorStop(0, `rgba(${o.color},${o.alpha})`);
+        g.addColorStop(1, `rgba(${o.color},0)`);
+        ctx.beginPath();
+        ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+      });
+
+      // Draw particles + connecting lines
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+
+        // Connect nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
+          const dx = p.x - q.x, dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(41,171,226,${0.06 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+    window.addEventListener('resize', init);
+  })();
 
   // ── CIRCUIT BOARD BACKGROUND ──
   (function () {
