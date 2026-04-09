@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComSure – When Your Internet Fails, Your Business Doesn't</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; }
+
+    :root {
+      --navy:    #060D18;
+      --navy-2:  #0B1A2D;
+      --blue:    #29ABE2;
+      --blue-d:  #1a8abf;
+      --red:     #D93025;
+      --green:   #1A9E5C;
+      --white:   #ffffff;
+      --ice:     #EDF5FB;
+      --text:    #0B1B2B;
+      --muted:   #52687A;
+      --border:  #D5E4EF;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap     { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    .wrap--sm { max-width:  720px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── TYPE ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 6px 16px; border-radius: 4px;
+      margin-bottom: 24px; transition: all .5s;
+    }
+    .eyebrow.state-off { background: rgba(217,48,37,.08); border: 1px solid rgba(217,48,37,.25); color: #c0392b; }
+    .eyebrow.state-on  { background: rgba(26,158,92,.08);  border: 1px solid rgba(26,158,92,.3);  color: #1a9e5c; }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: all .4s; }
+    .state-off .eyebrow-dot { background: var(--red); box-shadow: 0 0 0 3px rgba(217,48,37,.2); }
+    .state-on  .eyebrow-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(26,158,92,.2); animation: pulse-dot 1.8s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 3px rgba(26,158,92,.2)} 50%{box-shadow:0 0 0 7px rgba(26,158,92,.1)} }
+
+    .section-tag {
+      display: inline-block; font-size: 11px; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 3px; margin-bottom: 16px;
+    }
+    .tag-red   { background: rgba(217,48,37,.08); color: #b02820; border: 1px solid rgba(217,48,37,.18); }
+    .tag-blue  { background: rgba(41,171,226,.1);  color: var(--blue-d); border: 1px solid rgba(41,171,226,.2); }
+    .tag-light { background: rgba(41,171,226,.12); color: #5ec8f0; border: 1px solid rgba(41,171,226,.2); }
+
+    /* ── NAV ── */
+    .nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+      padding: 22px 32px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav__logo-wrap { display: flex; align-items: center; }
+    .nav__logo {
+      height: 42px; width: auto;
+      display: block; opacity: 0.7;
+    }
+    @media (max-width: 480px) {
+      .nav { padding: 18px 20px; }
+      .nav__logo { height: 32px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      padding: 100px 0 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .circuit-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+      opacity: 1;
+      -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, transparent 25%, black 65%);
+      mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, transparent 25%, black 65%);
+    }
+    .hero__inner { position: relative; z-index: 1; }
+    .hero__inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 40px;
+      min-height: 580px;
+    }
+    .hero__left {
+      padding-bottom: 80px;
+      background: linear-gradient(to right, rgba(6,13,24,0.92) 55%, rgba(6,13,24,0.0));
+      border-radius: 12px;
+    }
+    .hero__headline {
+      font-size: clamp(28px, 3.4vw, 48px);
+      font-weight: 650; line-height: 1.12;
+      letter-spacing: -.03em; color: var(--white);
+      margin-bottom: 20px;
+      white-space: nowrap;
+    }
+    .hero__headline em { font-style: normal; color: var(--blue); }
+    .hero__sub {
+      font-size: clamp(15px, 1.6vw, 18px); color: rgba(255,255,255,.55);
+      max-width: 460px; line-height: 1.75; margin-bottom: 36px; font-weight: 400;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(41,171,226,0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(41,171,226,0.45);
+      color: var(--white);
+      padding: 16px 32px; border-radius: 8px;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      box-shadow: 0 4px 24px rgba(41,171,226,.25), inset 0 1px 0 rgba(255,255,255,.1);
+      transition: all .2s; text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: rgba(41,171,226,0.32);
+      border-color: rgba(41,171,226,0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(41,171,226,.35), inset 0 1px 0 rgba(255,255,255,.15);
+    }
+    .hero__note { margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.28); font-weight: 500; }
+
+    /* ── SHIELD SCENE ── */
+    .hero__right {
+      display: flex; align-items: center; justify-content: center;
+      padding-bottom: 40px;
+    }
+    .shield-scene {
+      display: flex; align-items: center; gap: 52px;
+      max-width: 100%;
+    }
+
+    /* Left: the shield + rings */
+    .shield-left {
+      position: relative; flex-shrink: 0;
+      width: 230px; height: 230px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pulse-ring {
+      position: absolute; border-radius: 50%;
+      border: 1.5px solid transparent; opacity: 0; pointer-events: none;
+    }
+    .pulse-ring.r1 { width: 230px; height: 230px; }
+    .pulse-ring.r2 { width: 310px; height: 310px; }
+    .pulse-ring.r3 { width: 390px; height: 390px; }
+    .shield-scene.on .pulse-ring.r1 { animation: ring-out 2.2s ease-out infinite; border-color: rgba(41,171,226,.5); }
+    .shield-scene.on .pulse-ring.r2 { animation: ring-out 2.2s ease-out .5s infinite; border-color: rgba(41,171,226,.3); }
+    .shield-scene.on .pulse-ring.r3 { animation: ring-out 2.2s ease-out 1s infinite; border-color: rgba(41,171,226,.15); }
+    @keyframes ring-out { 0%{transform:scale(.7);opacity:.9} 100%{transform:scale(1.25);opacity:0} }
+
+    .shield-bg-glow {
+      position: absolute; width: 250px; height: 250px; border-radius: 50%;
+      transition: background .5s ease; pointer-events: none;
+      background: radial-gradient(circle, rgba(217,48,37,.18) 0%, transparent 70%);
+    }
+    .shield-scene.on .shield-bg-glow {
+      background: radial-gradient(circle, rgba(41,171,226,.25) 0%, transparent 70%);
+    }
+
+    /* Red rotating ring — off state */
+    .shield-ring {
+      position: absolute; z-index: 4;
+      width: 222px; height: 222px; border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: rgba(217,48,37,.75);
+      border-right-color: rgba(217,48,37,.2);
+      animation: spin-ring 4.5s linear infinite;
+      transition: opacity .4s ease;
+      pointer-events: none;
+    }
+    .shield-scene.on         .shield-ring { opacity: 0; }
+    .shield-scene.connecting .shield-ring { opacity: 0; }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
+
+    /* Blue connecting ring */
+    .connect-ring {
+      position: absolute; z-index: 4;
+      width: 222px; height: 222px; border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: rgba(41,171,226,.95);
+      border-right-color: rgba(41,171,226,.3);
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .shield-scene.connecting .connect-ring { opacity: 1; animation: spin-ring .7s linear infinite; }
+
+    /* Shield button */
+    .shield-btn {
+      position: relative; z-index: 5;
+      width: 185px; height: 185px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; user-select: none;
+      transition: all .4s ease;
+    }
+    .shield-btn.off {
+      background: #111c2a;
+      box-shadow: 0 0 0 8px rgba(255,255,255,.03), 0 0 0 1px rgba(217,48,37,.2), 0 8px 40px rgba(0,0,0,.5);
+    }
+    .shield-btn.off img       { filter: grayscale(1) brightness(.45); transition: filter .4s; }
+    .shield-btn.connecting    { background: #0e1a28; box-shadow: 0 0 0 8px rgba(41,171,226,.1), 0 0 40px rgba(41,171,226,.2); }
+    .shield-btn.connecting img{ filter: grayscale(.2) brightness(.7); transition: filter .2s; }
+    .shield-btn.on {
+      background: #ffffff;
+      box-shadow: 0 0 0 12px rgba(41,171,226,.18), 0 0 0 26px rgba(41,171,226,.08), 0 0 70px rgba(41,171,226,.5);
+      animation: shield-breathe 2.5s ease-in-out infinite;
+    }
+    .shield-btn.on img  { filter: none; transition: filter .4s; }
+    .shield-btn img     { width: 122px; height: 122px; object-fit: contain; display: block; pointer-events: none; }
+    @keyframes shield-breathe {
+      0%,100%{ box-shadow: 0 0 0 12px rgba(41,171,226,.18),0 0 0 26px rgba(41,171,226,.08),0 0 70px rgba(41,171,226,.5); }
+      50%    { box-shadow: 0 0 0 18px rgba(41,171,226,.22),0 0 0 36px rgba(41,171,226,.1), 0 0 100px rgba(41,171,226,.6); }
+    }
+
+    /* Hint / status below shield */
+    .shield-hint {
+      position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; font-weight: 700; color: rgba(255,255,255,.22);
+      letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+      transition: opacity .3s;
+    }
+    .shield-scene.on .shield-hint         { opacity: 0; pointer-events: none; }
+    .shield-scene.connecting .shield-hint { opacity: 0; }
+    .shield-connect-label {
+      position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; font-weight: 700; color: rgba(41,171,226,.7);
+      letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+      opacity: 0; transition: opacity .2s; pointer-events: none;
+    }
+    .shield-scene.connecting .shield-connect-label { opacity: 1; }
+    .shield-status {
+      position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; font-weight: 700; color: #4ade80;
+      letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+      opacity: 0; transition: opacity .3s .2s;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .shield-scene.on .shield-status { opacity: 1; }
+
+    /* Outage prompt — visible only in ON state */
+    .shield-outage-prompt {
+      position: absolute; bottom: -56px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,.3);
+      letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+      opacity: 0; transition: opacity .4s .6s;
+      cursor: pointer;
+      border-bottom: 1px dashed rgba(255,255,255,.15);
+      padding-bottom: 2px;
+    }
+    .shield-scene.on .shield-outage-prompt { opacity: 1; }
+    .shield-outage-prompt:hover { color: rgba(255,255,255,.55); border-bottom-color: rgba(255,255,255,.35); }
+
+    /* Right: stacked badges */
+    .shield-right { display: flex; flex-direction: column; gap: 16px; }
+    .orbit-badge {
+      border-radius: 8px; padding: 14px 22px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; font-weight: 800; white-space: nowrap;
+      letter-spacing: .07em; text-transform: uppercase;
+      position: relative;
+      transition: background .25s ease, border-color .25s ease, color .25s ease;
+    }
+
+    /* Connecting line — draws from badge left toward shield */
+    .orbit-badge::before {
+      content: '';
+      position: absolute;
+      right: 100%; top: 50%;
+      height: 1px; width: 80px;
+      transform: translateY(-50%) scaleX(0);
+      transform-origin: right center;
+      transition: transform .45s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+      pointer-events: none;
+    }
+    .orbit-badge.off::before {
+      background: linear-gradient(to left, rgba(217,48,37,.35), transparent);
+      transform: translateY(-50%) scaleX(0.35);
+      opacity: 1;
+    }
+    .orbit-badge.on::before {
+      background: linear-gradient(to left, rgba(26,158,92,.5), transparent);
+      transform: translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    .orbit-badge.off {
+      background: rgba(217,48,37,.1); border: 1px solid rgba(217,48,37,.2);
+      color: rgba(240,130,120,.95);
+    }
+    .orbit-badge.on {
+      background: rgba(26,158,92,.1); border: 1px solid rgba(26,158,92,.25);
+      color: rgba(100,220,160,.95);
+    }
+
+    @keyframes badge-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+    /* Slide-in spring on activation */
+    @keyframes badge-enter {
+      0%   { transform: translateX(22px); opacity: 0.2; }
+      65%  { transform: translateX(-3px); opacity: 1; }
+      100% { transform: translateX(0);    opacity: 1; }
+    }
+    .orbit-badge.badge-entering {
+      animation: badge-enter .5s cubic-bezier(.34,1.56,.64,1) forwards !important;
+    }
+
+    /* Slide-out on deactivation */
+    @keyframes badge-exit {
+      0%   { transform: translateX(0);    opacity: 1; }
+      100% { transform: translateX(10px); opacity: 0.4; }
+    }
+    .orbit-badge.badge-exiting {
+      animation: badge-exit .22s ease-in forwards !important;
+    }
+
+    .orbit-badge svg { flex-shrink: 0; width: 13px; height: 13px; }
+    .ob-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: all .2s; }
+    .orbit-badge.off .ob-dot { background: var(--red);   box-shadow: 0 0 5px rgba(217,48,37,.6); }
+    .orbit-badge.on  .ob-dot { background: var(--green); box-shadow: 0 0 6px rgba(26,158,92,.7); }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: #0a1828;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      padding: 18px 32px;
+    }
+    .trust-bar__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 32px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 13px; color: rgba(255,255,255,.4); font-weight: 600;
+    }
+    .trust-item svg { color: rgba(255,255,255,.25); flex-shrink: 0; }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 96px 32px; }
+    .section--ice   { background: var(--ice); }
+    .section--white { background: var(--white); }
+    .section--navy  { background: var(--navy); }
+
+    .section__title {
+      font-size: clamp(26px, 3.5vw, 42px);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -.03em; margin-bottom: 14px;
+    }
+    .section__title--white { color: var(--white); }
+    .section__sub {
+      font-size: 17px; color: var(--muted); max-width: 560px;
+      line-height: 1.75; font-weight: 400;
+    }
+    .section__sub--white { color: rgba(255,255,255,.5); }
+
+    /* ── FORM SECTION ── */
+    .form-wrap {
+      background: var(--white); border-radius: 12px;
+      padding: 52px 48px; max-width: 740px; margin: 0 auto;
+      box-shadow: 0 20px 80px rgba(11,27,43,.1);
+    }
+    .form-header { text-align: center; margin-bottom: 40px; }
+    .form-header__icon {
+      width: 60px; height: 60px; border-radius: 50%; background: var(--ice);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; color: var(--blue);
+    }
+    .form-header h2 {
+      font-size: clamp(22px, 3vw, 30px); font-weight: 900;
+      letter-spacing: -.025em; margin-bottom: 8px;
+    }
+    .form-header p { font-size: 16px; color: var(--muted); font-weight: 400; }
+    .form-grid { display: flex; flex-direction: column; gap: 18px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field label { font-size: 13px; font-weight: 700; color: #2a3e52; letter-spacing: .01em; }
+    .field select,
+    .field input {
+      padding: 13px 16px;
+      border: 1.5px solid var(--border); border-radius: 6px;
+      font-size: 15px; font-family: inherit; font-weight: 500; color: var(--text);
+      background: var(--white); outline: none; transition: border-color .15s;
+      appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352687A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+    }
+    .field select:focus,
+    .field input:focus  { border-color: var(--blue); }
+    .field input::placeholder { color: #9fb4c4; }
+    .form-submit {
+      background: rgba(41,171,226,0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(41,171,226,0.4);
+      color: var(--blue-d); width: 100%; padding: 17px; border-radius: 8px;
+      font-size: 17px; font-weight: 800; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      box-shadow: 0 4px 20px rgba(41,171,226,.15), inset 0 1px 0 rgba(255,255,255,.6);
+      transition: all .2s; margin-top: 8px;
+    }
+    .form-submit:hover {
+      background: rgba(41,171,226,0.2);
+      border-color: rgba(41,171,226,0.6);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(41,171,226,.2), inset 0 1px 0 rgba(255,255,255,.6);
+    }
+    .form-note { text-align: center; margin-top: 14px; font-size: 13px; color: #9fb4c4; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+    /* ── PROBLEM SECTION ── */
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .problem-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 32px 28px;
+      transition: all .2s; position: relative; overflow: hidden;
+    }
+    .problem-card__accent {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--red); opacity: 0; transition: opacity .2s;
+    }
+    .problem-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); }
+    .problem-card:hover .problem-card__accent { opacity: 1; }
+    .problem-card__icon {
+      width: 48px; height: 48px; background: rgba(217,48,37,.07);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: var(--red); margin-bottom: 18px;
+    }
+    .problem-card__title { font-size: 17px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.02em; }
+    .problem-card__text  { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 400; }
+    .problem-card__status {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px; padding: 5px 12px; border-radius: 4px;
+      background: rgba(217,48,37,.07); color: var(--red);
+      font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+
+    /* ── SOLUTION SECTION ── */
+    .solution-flow {
+      display: grid; grid-template-columns: 1fr 48px 1fr 48px 1fr;
+      align-items: center; margin-top: 64px;
+    }
+    .flow-step {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px; padding: 32px 24px; text-align: center;
+    }
+    .flow-step--active {
+      background: var(--blue); border-color: var(--blue);
+      box-shadow: 0 8px 40px rgba(41,171,226,.35);
+    }
+    .flow-step__icon {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .flow-step__icon--red   { background: rgba(217,48,37,.15); color: #ff7070; }
+    .flow-step__icon--blue  { background: rgba(255,255,255,.2); color: var(--white); }
+    .flow-step__icon--green { background: rgba(26,158,92,.15);  color: #4ade80; }
+    .flow-step__title { font-size: 16px; font-weight: 800; color: var(--white); margin-bottom: 6px; letter-spacing: -.01em; }
+    .flow-step__text  { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; font-weight: 400; }
+    .flow-step--active .flow-step__text { color: rgba(255,255,255,.8); }
+    .flow-arrow { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.2); }
+
+    .solution-bullets {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px;
+    }
+    .sol-bullet {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 22px;
+    }
+    .sol-bullet__icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(41,171,226,.15); color: var(--blue);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .sol-bullet__title { font-size: 15px; font-weight: 800; color: var(--white); margin-bottom: 4px; letter-spacing: -.01em; }
+    .sol-bullet__text  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.6; font-weight: 400; }
+
+    /* ── CLOSE CTA ── */
+    .close-cta {
+      background: var(--navy); padding: 100px 32px; text-align: center;
+    }
+    .close-cta__icon {
+      width: 80px; height: 80px; border-radius: 50%; background: rgba(41,171,226,.1);
+      border: 1px solid rgba(41,171,226,.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px; color: var(--blue);
+    }
+    .close-cta h2 {
+      font-size: clamp(24px, 4vw, 44px); font-weight: 900;
+      color: var(--white); letter-spacing: -.03em;
+      margin-bottom: 16px; line-height: 1.1;
+    }
+    .close-cta p {
+      font-size: 18px; color: rgba(255,255,255,.45);
+      max-width: 480px; margin: 0 auto 40px; line-height: 1.7; font-weight: 400;
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.7);
+      padding: 14px 28px; border-radius: 8px;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      transition: all .2s; text-decoration: none; margin-left: 12px;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,.35);
+      color: var(--white);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #030810;
+      border-top: 1px solid rgba(255,255,255,.04);
+      padding: 28px 32px; text-align: center;
+    }
+    .footer img  { height: 22px; opacity: .35; margin-bottom: 10px; display: inline-block; }
+    .footer p    { font-size: 13px; color: rgba(255,255,255,.18); font-weight: 500; }
+    .footer a    { color: var(--blue); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      /* Hero */
+      .hero { padding: 64px 0 0; }
+      .hero__inner {
+        grid-template-columns: 1fr; text-align: center;
+        min-height: auto; gap: 40px; padding: 0 20px;
+      }
+      .hero__left    { padding-bottom: 0; background: none; }
+      .hero__headline { font-size: clamp(24px, 7.5vw, 36px); white-space: normal; }
+      .hero__sub     { font-size: 15px; max-width: 100%; margin: 0 auto 28px; }
+      .eyebrow       { display: inline-flex; font-size: 11px; }
+      .btn-primary   { width: 100%; justify-content: center; }
+      .hero__note    { text-align: center; }
+
+      /* Shield scene */
+      .hero__right   { padding: 0 0 56px; }
+      .shield-scene  { gap: 20px; justify-content: center; }
+      .shield-left   { width: 150px; height: 150px; }
+      .shield-bg-glow { width: 160px; height: 160px; }
+      .shield-ring, .connect-ring { width: 144px; height: 144px; }
+      .shield-btn    { width: 118px; height: 118px; }
+      .shield-btn img { width: 78px; height: 78px; }
+      .pulse-ring.r1 { width: 150px; height: 150px; }
+      .pulse-ring.r2 { width: 200px; height: 200px; }
+      .pulse-ring.r3 { width: 250px; height: 250px; }
+      .orbit-badge   { padding: 10px 14px; font-size: 10px; gap: 8px; }
+
+      /* Sections */
+      .section { padding: 80px 20px; }
+      .wrap, .wrap--sm { padding: 0 20px; }
+
+      /* Solution */
+      .solution-flow    { grid-template-columns: 1fr; gap: 0; }
+      .flow-arrow       { transform: rotate(90deg); padding: 8px 0; }
+      .solution-bullets { grid-template-columns: 1fr; }
+
+      /* Form */
+      .form-wrap  { padding: 36px 24px; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      /* Hero */
+      .hero { padding: 60px 0 0; }
+      .hero__headline { font-size: clamp(22px, 7vw, 28px); }
+      .eyebrow        { font-size: 10px; padding: 5px 12px; }
+      #eyebrow-text   { display: none; } /* too long for small screens */
+      .hero__note     { font-size: 11px; }
+
+      /* Nav */
+      .nav { padding: 14px 16px; }
+      .nav__logo { height: 26px; }
+
+      /* Shield: column layout — badges wrap below */
+      .shield-scene  { flex-direction: column; align-items: center; gap: 14px; }
+      .shield-right  { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; }
+      .orbit-badge   { padding: 8px 12px; font-size: 10px; }
+
+      /* Hide connecting lines — wrong direction in column layout */
+      .orbit-badge::before { display: none; }
+
+      /* Hide outage prompt — would overlap badges in column layout */
+      .shield-outage-prompt { display: none; }
+
+      /* Trust bar — compact 2-per-row */
+      .trust-bar         { padding: 18px 16px; }
+      .trust-bar__inner  { gap: 10px 20px; justify-content: flex-start; }
+      .trust-item        { font-size: 11px; gap: 7px; }
+
+      /* Problem cards single col */
+      .problem-grid { grid-template-columns: 1fr; gap: 12px; }
+
+      /* Form */
+      .form-wrap         { padding: 32px 16px; }
+      .form-header       { margin-bottom: 28px; }
+      .form-header h2    { font-size: 20px; }
+      .form-header p     { font-size: 14px; }
+      .field label       { font-size: 12px; }
+      .field select,
+      .field input       { padding: 12px 14px; font-size: 14px; }
+      .form-submit       { font-size: 15px; padding: 16px; }
+
+      /* Overflow guard */
+      html, body { overflow-x: hidden; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PREMIUM REDESIGN — overrides only, hero untouched
+       ═══════════════════════════════════════════════════════ */
+
+    /* Updated tokens (non-hero usage) */
+    :root {
+      --ice:    #f5f5f6;
+      --text:   #09090b;
+      --muted:  #71717a;
+      --border: #e4e4e7;
+    }
+
+    body { line-height: 1.65; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: #070d18;
+      border-top: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      padding: 24px 32px;
+    }
+    .trust-bar__inner { gap: 44px; }
+    .trust-item {
+      font-size: 12px; font-weight: 500;
+      color: rgba(255,255,255,.28);
+      letter-spacing: .02em; gap: 10px;
+    }
+    .trust-item svg { opacity: .5; }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 128px 32px; }
+    .section-tag {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .07em; border-radius: 100px;
+      padding: 5px 14px; margin-bottom: 20px;
+    }
+    .tag-red   { background: rgba(239,68,68,.06);   color: #dc2626; border-color: rgba(239,68,68,.12); }
+    .tag-blue  { background: rgba(41,171,226,.07);  color: #0ea5e9; border-color: rgba(41,171,226,.14); }
+    .tag-light { background: rgba(41,171,226,.1);   color: #7dd3fc; border-color: rgba(41,171,226,.18); }
+    .section__title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700; letter-spacing: -.035em; margin-bottom: 18px;
+    }
+    .section__sub { font-size: 18px; line-height: 1.85; color: var(--muted); }
+
+    /* ── FORM SECTION ── */
+    .section--ice { background: #f5f5f6; }
+    .form-wrap {
+      border-radius: 20px; padding: 64px 60px;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 1px 2px rgba(0,0,0,.03), 0 24px 72px rgba(0,0,0,.07);
+    }
+    .form-header { margin-bottom: 48px; }
+    .form-header__icon {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: #f4f4f5; border-color: #e4e4e7;
+    }
+    .form-header h2 { font-weight: 700; letter-spacing: -.03em; margin-bottom: 10px; }
+    .form-header p  { font-size: 16px; color: var(--muted); }
+    .form-grid  { gap: 20px; }
+    .form-row-2 { gap: 20px; }
+    .field { gap: 8px; }
+    .field label {
+      font-size: 13px; font-weight: 600;
+      color: #3f3f46; letter-spacing: 0;
+    }
+    .field select, .field input {
+      padding: 14px 16px; border-radius: 10px;
+      border: 1px solid #e4e4e7; font-weight: 400;
+      color: var(--text); background: #ffffff;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field select:focus, .field input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(41,171,226,.1);
+    }
+    .field input::placeholder { color: #a1a1aa; }
+    .form-submit {
+      background: #09090b; border: none; color: #fff;
+      border-radius: 10px; font-size: 16px; font-weight: 600;
+      letter-spacing: -.01em; padding: 18px;
+      backdrop-filter: none; -webkit-backdrop-filter: none;
+      box-shadow: none;
+      transition: background .15s, transform .15s, box-shadow .15s;
+    }
+    .form-submit:hover {
+      background: #27272a; border: none;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
+    .form-note { color: #a1a1aa; font-size: 13px; margin-top: 16px; }
+
+    /* ── PROBLEM SECTION ── */
+    .section--white { background: #ffffff; }
+    .problem-grid   { gap: 16px; margin-top: 72px; }
+    .problem-card {
+      border-radius: 16px; padding: 36px 32px;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 1px 3px rgba(0,0,0,.03);
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.08);
+      border-color: rgba(0,0,0,.1);
+    }
+    .problem-card:hover .problem-card__accent { opacity: 1; }
+    .problem-card__accent { height: 2px; }
+    .problem-card__icon {
+      border-radius: 12px; margin-bottom: 22px;
+      background: rgba(239,68,68,.06); color: #dc2626;
+    }
+    .problem-card__title { font-size: 16px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 10px; }
+    .problem-card__text  { font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .problem-card__status {
+      margin-top: 20px; border-radius: 6px;
+      background: rgba(239,68,68,.05); color: #dc2626;
+      border: 1px solid rgba(239,68,68,.1);
+      font-size: 11px; font-weight: 600; letter-spacing: .05em;
+    }
+
+    /* ── SOLUTION SECTION ── */
+    .section--navy { background: #07101d; }
+    .solution-flow { margin-top: 80px; }
+    .flow-step {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px; padding: 40px 28px;
+      transition: border-color .2s, background .2s;
+    }
+    .flow-step--active {
+      background: rgba(41,171,226,.06);
+      border-color: rgba(41,171,226,.28);
+      box-shadow: 0 0 0 1px rgba(41,171,226,.1), 0 16px 48px rgba(41,171,226,.1);
+    }
+    .flow-step__title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 8px; }
+    .flow-step__text  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.7; }
+    .solution-bullets { gap: 14px; margin-top: 56px; }
+    .sol-bullet {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px; padding: 26px;
+      transition: background .2s, border-color .2s;
+    }
+    .sol-bullet:hover { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); }
+    .sol-bullet__icon { border-radius: 10px; }
+    .sol-bullet__title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+    .sol-bullet__text  { font-size: 13px; color: rgba(255,255,255,.42); line-height: 1.7; }
+
+    /* ── CLOSE CTA ── */
+    .close-cta {
+      background: #07101d; padding: 140px 32px;
+      border-top: 1px solid rgba(255,255,255,.04);
+    }
+    .close-cta__icon {
+      width: 72px; height: 72px; border-radius: 18px;
+      background: rgba(41,171,226,.07);
+      border: 1px solid rgba(41,171,226,.15);
+      margin-bottom: 32px;
+    }
+    .close-cta h2 { font-weight: 700; letter-spacing: -.035em; }
+    .close-cta p  { font-size: 18px; color: rgba(255,255,255,.38); max-width: 440px; margin: 0 auto 48px; line-height: 1.8; }
+    .btn-ghost {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.55);
+      border-radius: 8px; padding: 16px 28px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22); color: #fff; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #040912;
+      border-top: 1px solid rgba(255,255,255,.04);
+      padding: 40px 32px;
+    }
+    .footer img { opacity: .22; height: 20px; margin-bottom: 14px; }
+    .footer p   { font-size: 12px; color: rgba(255,255,255,.14); letter-spacing: .01em; }
+    .footer a   { color: rgba(41,171,226,.6); }
+    .footer a:hover { color: var(--blue); }
+
+    /* ── RESPONSIVE OVERRIDES ── */
+    @media (max-width: 800px) {
+      .solution-bullets { grid-template-columns: 1fr; }
+      .close-cta  { padding: 90px 20px; }
+      .footer     { padding: 32px 20px; }
+      .section__title { font-size: clamp(24px, 6vw, 36px); }
+    }
+    @media (max-width: 480px) {
+      .section       { padding: 72px 16px; }
+      .form-wrap     { padding: 32px 16px; }
+      .close-cta     { padding: 72px 16px; }
+      .close-cta h2  { font-size: clamp(22px, 7vw, 30px); }
+      .close-cta p   { font-size: 15px; }
+      .section__sub  { font-size: 15px; }
+      .btn-primary, .btn-ghost { font-size: 14px; padding: 14px 20px; }
+      .btn-ghost     { margin-left: 0; margin-top: 10px; width: 100%; justify-content: center; display: inline-flex; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SVG Icon Sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="9" y2="15"/>
+  </symbol>
+  <symbol id="i-phone-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="2" y1="2" x2="22" y2="22"/>
+    <path d="M10.68 13.31a16 16 0 003.01 3.01L16 14l4 4-2 2A15.77 15.77 0 012 4l2-2 4 4-2.31 2.31"/>
+  </symbol>
+  <symbol id="i-cloud-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="2" y1="2" x2="22" y2="22"/>
+    <path d="M5.782 5.782A7 7 0 004 11a5 5 0 005 5h9"/>
+    <path d="M14.456 2.568A6.993 6.993 0 0121 9c0 .99-.18 1.93-.51 2.8"/>
+  </symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22"/>
+    <circle cx="12" cy="12" r="3"/>
+  </symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+  </symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+  </symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+  </symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+  </symbol>
+  <symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="2" y1="2" x2="22" y2="22"/>
+    <path d="M8.5 16.5a5 5 0 017 0M2 8.82a15 15 0 0121.16 0M5 12.55a11 11 0 015.29-2.81"/><circle cx="12" cy="20" r="1" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+  </symbol>
+  <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+  </symbol>
+</svg>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <nav class="nav">
+    <div class="nav__logo-wrap">
+      <img src="Comsure Logo PNG-01.png" alt="ComSure" class="nav__logo" />
+    </div>
+  </nav>
+  <canvas class="circuit-bg" id="circuitBg"></canvas>
+  <div class="hero__inner">
+
+    <!-- LEFT: Text -->
+    <div class="hero__left">
+      <div class="eyebrow state-off" id="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span id="eyebrow-text">Internet connection lost — business at risk</span>
+      </div>
+      <h1 class="hero__headline">
+        When Your Internet Fails,<br/><em>Your Business Doesn't.</em>
+      </h1>
+      <p class="hero__sub">
+        ComSure automatically switches to a backup connection the moment your broadband drops — keeping payments, phones, and systems running without interruption.
+      </p>
+      <a href="#form" class="btn-primary">
+        Check Your Business Risk
+        <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+      </a>
+      <p class="hero__note">Free assessment &nbsp;·&nbsp; 60 seconds &nbsp;·&nbsp; No commitment</p>
+    </div>
+
+    <!-- RIGHT: Shield Animation -->
+    <div class="hero__right">
+      <div class="shield-scene" id="shieldScene">
+
+        <!-- Shield -->
+        <div class="shield-left">
+          <div class="pulse-ring r1"></div>
+          <div class="pulse-ring r2"></div>
+          <div class="pulse-ring r3"></div>
+          <div class="shield-bg-glow"></div>
+          <div class="shield-ring"></div>
+          <div class="connect-ring"></div>
+
+          <div class="shield-btn off" id="shieldBtn" onclick="toggleComSure()">
+            <img src="comsure-icon.png" alt="ComSure" />
+          </div>
+
+          <div class="shield-hint">Tap to restore protection</div>
+          <div class="shield-connect-label">Connecting...</div>
+          <div class="shield-status">
+            <svg width="8" height="8" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#4ade80"/></svg>
+            Protected
+          </div>
+          <div class="shield-outage-prompt">Simulate an outage</div>
+        </div>
+
+        <!-- Badges stacked to the right -->
+        <div class="shield-right">
+          <div class="orbit-badge off" id="badge-tl">
+            <div class="ob-dot"></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span id="badge-tl-text">Payments Failed</span>
+          </div>
+          <div class="orbit-badge off" id="badge-tr">
+            <div class="ob-dot"></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"/><path d="M10.68 13.31a16 16 0 003.01 3.01L16 14l4 4-2 2A15.77 15.77 0 012 4l2-2 4 4-2.31 2.31"/></svg>
+            <span id="badge-tr-text">Calls Dropped</span>
+          </div>
+          <div class="orbit-badge off" id="badge-bl">
+            <div class="ob-dot"></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+            <span id="badge-bl-text">Systems Offline</span>
+          </div>
+          <div class="orbit-badge off" id="badge-br">
+            <div class="ob-dot"></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22"/></svg>
+            <span id="badge-br-text">Security Lost</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── TRUST BAR ─── -->
+<div class="trust-bar">
+  <div class="trust-bar__inner">
+    <div class="trust-item">
+      <svg width="16" height="16"><use href="#i-map-pin"/></svg> UK-based solution
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16"><use href="#i-zap"/></svg> Automatic instant failover
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16"><use href="#i-tool"/></svg> No IT team required
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16"><use href="#i-wifi"/></svg> Works with any broadband
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16"><use href="#i-lock"/></svg> Protects all connected systems
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── FORM ─── -->
+<section class="section section--ice" id="form">
+  <div class="wrap--sm">
+    <div class="form-wrap">
+      <div class="form-header">
+        <div class="form-header__icon">
+          <svg width="28" height="28"><use href="#i-shield"/></svg>
+        </div>
+        <h2>Check Your Business Risk in 60 Seconds</h2>
+        <p>Answer a few quick questions. We'll show you exactly how exposed your business is — and what to do about it.</p>
+      </div>
+
+      <form class="form-grid" onsubmit="handleSubmit(event)">
+        <div class="field">
+          <label>What type of business do you run?</label>
+          <select required>
+            <option value="" disabled selected>Select your business type</option>
+            <option>Retail / Shop</option>
+            <option>Hospitality (café, restaurant, hotel)</option>
+            <option>Office / Professional services</option>
+            <option>Healthcare / Clinic</option>
+            <option>Trades / Construction</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>How reliant is your business on internet connectivity?</label>
+          <select required>
+            <option value="" disabled selected>Select an option</option>
+            <option>Not very — we could manage without it</option>
+            <option>Somewhat — we use it but could cope</option>
+            <option>Very — we rely on it for daily operations</option>
+            <option>Completely — business stops without it</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>What would happen if your internet went down for a full day?</label>
+          <select required>
+            <option value="" disabled selected>Select an option</option>
+            <option>Minor inconvenience — we'd manage fine</option>
+            <option>Some disruption to the team</option>
+            <option>We would lose revenue</option>
+            <option>We wouldn't be able to operate at all</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>How much revenue could you lose per day without internet?</label>
+          <select required>
+            <option value="" disabled selected>Select an option</option>
+            <option>Up to £499</option>
+            <option>£500 – £2,499</option>
+            <option>£2,500 – £4,999</option>
+            <option>£5,000+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Do you currently have a backup internet connection?</label>
+          <select required>
+            <option value="" disabled selected>Select an option</option>
+            <option>Yes — we have a backup in place</option>
+            <option>No — we don't have one</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+        <div class="form-row-2">
+          <div class="field">
+            <label>Your name *</label>
+            <input type="text" placeholder="John Smith" required />
+          </div>
+          <div class="field">
+            <label>Business name *</label>
+            <input type="text" placeholder="Acme Ltd" required />
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="field">
+            <label>Email address *</label>
+            <input type="email" placeholder="john@yourbusiness.co.uk" required />
+          </div>
+          <div class="field">
+            <label>Phone number</label>
+            <input type="tel" placeholder="07700 900000" />
+          </div>
+        </div>
+        <button type="submit" class="form-submit">Get My Free Risk Assessment</button>
+        <p class="form-note">
+          <svg width="14" height="14"><use href="#i-lock"/></svg>
+          Your details are secure. No spam, no hard sell.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── PROBLEM ─── -->
+<section class="section section--white">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <span class="section-tag tag-red">The problem</span>
+      <h2 class="section__title">What happens when your<br/>internet goes down?</h2>
+      <p class="section__sub" style="margin:0 auto;">A cut cable, a carrier fault, a router failure. Without a backup, the impact is immediate and costly.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-card__accent"></div>
+        <div class="problem-card__icon">
+          <svg width="24" height="24"><use href="#i-card"/></svg>
+        </div>
+        <div class="problem-card__title">Payments stop instantly</div>
+        <div class="problem-card__text">Card machines go offline. Every customer who can't pay walks out. Revenue stops the second your connection drops.</div>
+        <div class="problem-card__status"><div class="status-dot"></div>Connection Error</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card__accent"></div>
+        <div class="problem-card__icon">
+          <svg width="24" height="24"><use href="#i-phone-off"/></svg>
+        </div>
+        <div class="problem-card__title">Calls go unanswered</div>
+        <div class="problem-card__text">VoIP phones depend on internet. When it fails, incoming calls drop and new enquiries go straight to a competitor.</div>
+        <div class="problem-card__status"><div class="status-dot"></div>Line Dropped</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card__accent"></div>
+        <div class="problem-card__icon">
+          <svg width="24" height="24"><use href="#i-cloud-off"/></svg>
+        </div>
+        <div class="problem-card__title">Systems and bookings fail</div>
+        <div class="problem-card__text">Cloud software, booking platforms, and staff tools all go offline. Work stops. Customers can't book or access services.</div>
+        <div class="problem-card__status"><div class="status-dot"></div>Offline</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card__accent"></div>
+        <div class="problem-card__icon">
+          <svg width="24" height="24"><use href="#i-eye-off"/></svg>
+        </div>
+        <div class="problem-card__title">Security goes dark</div>
+        <div class="problem-card__text">CCTV and remote monitoring lose their connection. You lose full visibility of your premises without warning.</div>
+        <div class="problem-card__status"><div class="status-dot"></div>No Signal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── SOLUTION ─── -->
+<section class="section section--navy">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <span class="section-tag tag-light">The solution</span>
+      <h2 class="section__title section__title--white">Stay connected with ComSure.</h2>
+      <p class="section__sub section__sub--white" style="margin:0 auto;">ComSure sits between your broadband and your router. The moment your main connection drops, it switches automatically.</p>
+    </div>
+
+    <div class="solution-flow">
+      <div class="flow-step">
+        <div class="flow-step__icon flow-step__icon--red">
+          <svg width="26" height="26"><use href="#i-wifi-off"/></svg>
+        </div>
+        <div class="flow-step__title">Broadband fails</div>
+        <div class="flow-step__text">Your main connection drops — for any reason, at any time.</div>
+      </div>
+      <div class="flow-arrow">
+        <svg width="20" height="20"><use href="#i-arrow-right"/></svg>
+      </div>
+      <div class="flow-step flow-step--active">
+        <div class="flow-step__icon flow-step__icon--blue">
+          <svg width="26" height="26"><use href="#i-shield"/></svg>
+        </div>
+        <div class="flow-step__title">ComSure activates</div>
+        <div class="flow-step__text">Detects the outage instantly and switches to a backup SIM connection.</div>
+      </div>
+      <div class="flow-arrow">
+        <svg width="20" height="20"><use href="#i-arrow-right"/></svg>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__icon flow-step__icon--green">
+          <svg width="26" height="26"><use href="#i-check-circle"/></svg>
+        </div>
+        <div class="flow-step__title">Business continues</div>
+        <div class="flow-step__text">Payments, phones, and systems stay online. No disruption, no downtime.</div>
+      </div>
+    </div>
+
+    <div class="solution-bullets">
+      <div class="sol-bullet">
+        <div class="sol-bullet__icon"><svg width="20" height="20"><use href="#i-zap"/></svg></div>
+        <div>
+          <div class="sol-bullet__title">Instant failover</div>
+          <div class="sol-bullet__text">Switches in seconds. No waiting, no manual steps, no downtime.</div>
+        </div>
+      </div>
+      <div class="sol-bullet">
+        <div class="sol-bullet__icon"><svg width="20" height="20"><use href="#i-tool"/></svg></div>
+        <div>
+          <div class="sol-bullet__title">No technical knowledge needed</div>
+          <div class="sol-bullet__text">Installs between your router and broadband. Set it and forget it.</div>
+        </div>
+      </div>
+      <div class="sol-bullet">
+        <div class="sol-bullet__icon"><svg width="20" height="20"><use href="#i-wifi"/></svg></div>
+        <div>
+          <div class="sol-bullet__title">Works with any broadband</div>
+          <div class="sol-bullet__text">Compatible with all UK providers. No changes to your current setup.</div>
+        </div>
+      </div>
+      <div class="sol-bullet">
+        <div class="sol-bullet__icon"><svg width="20" height="20"><use href="#i-building"/></svg></div>
+        <div>
+          <div class="sol-bullet__title">Built for businesses</div>
+          <div class="sol-bullet__text">Designed to protect revenue, operations, and continuity — not just WiFi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── CLOSE CTA ─── -->
+<section class="close-cta">
+  <div class="close-cta__icon">
+    <svg width="34" height="34"><use href="#i-shield"/></svg>
+  </div>
+  <h2>Don't wait until your<br/>business goes offline.</h2>
+  <p>Most outages happen without warning. By the time you need a backup, it's already too late to have one.</p>
+  <div>
+    <a href="#form" class="btn-primary">
+      Get Started Today
+      <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+    </a>
+    <a href="https://comsure.uk" class="btn-ghost">Learn More</a>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <img src="comsure-logo.jpeg" alt="ComSure" /><br/>
+  <p>&copy; 2026 ComSure. Business connectivity solutions for UK businesses. &nbsp;·&nbsp; <a href="https://comsure.uk">comsure.uk</a></p>
+</footer>
+
+
+<script>
+  let activated = false;
+  let busy = false;
+
+  const badges = [
+    { id: 'badge-tl', textId: 'badge-tl-text', off: 'Payments Failed',  on: 'Payments Running' },
+    { id: 'badge-tr', textId: 'badge-tr-text', off: 'Calls Dropped',    on: 'Calls Connected'  },
+    { id: 'badge-bl', textId: 'badge-bl-text', off: 'Systems Offline',  on: 'Systems Online'   },
+    { id: 'badge-br', textId: 'badge-br-text', off: 'Security Lost',    on: 'Security Live'    },
+  ];
+
+  function toggleComSure() {
+    if (busy) return;
+
+    const scene  = document.getElementById('shieldScene');
+    const btn    = document.getElementById('shieldBtn');
+    const brow   = document.getElementById('eyebrow');
+    const browtx = document.getElementById('eyebrow-text');
+
+    if (!activated) {
+      // Brief connecting flash, then instant on
+      busy = true;
+      btn.className = 'shield-btn connecting';
+      scene.classList.add('connecting');
+
+      setTimeout(() => {
+        scene.classList.remove('connecting');
+        scene.classList.add('on');
+        btn.className = 'shield-btn on';
+        brow.className = 'eyebrow state-on';
+        browtx.textContent = 'ComSure active — business fully protected';
+        activated = true;
+        busy = false;
+        // Staggered slide-in + colour swap
+        badges.forEach((b, i) => setTimeout(() => {
+          const el = document.getElementById(b.id);
+          el.classList.replace('off', 'on');
+          el.classList.add('badge-entering');
+          document.getElementById(b.textId).textContent = b.on;
+          setTimeout(() => el.classList.remove('badge-entering'), 550);
+        }, i * 90));
+      }, 400);
+
+    } else {
+      // Off — snap back instantly
+      scene.classList.remove('on');
+      btn.className = 'shield-btn off';
+      brow.className = 'eyebrow state-off';
+      browtx.textContent = 'Internet connection lost — business at risk';
+      activated = false;
+      badges.forEach((b, i) => setTimeout(() => {
+        const el = document.getElementById(b.id);
+        el.classList.add('badge-exiting');
+        setTimeout(() => {
+          el.classList.remove('badge-exiting');
+          el.classList.replace('on', 'off');
+          document.getElementById(b.textId).textContent = b.off;
+        }, 220);
+      }, i * 40));
+    }
+  }
+
+  // Auto-activate on page load, then prompt to simulate outage
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => toggleComSure(), 900);
+    document.querySelector('.shield-outage-prompt').addEventListener('click', toggleComSure);
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Submitted — we\'ll be in touch shortly';
+    btn.style.background = '#1a9e5c';
+    btn.disabled = true;
+  }
+
+  // ── CIRCUIT BOARD BACKGROUND ──
+  (function () {
+    const canvas = document.getElementById('circuitBg');
+    const ctx    = canvas.getContext('2d');
+    const GRID   = 36;
+    const COLORS = [
+      [41,  171, 226],  // brand blue
+      [80,  210, 200],  // teal
+      [41,  171, 226],  // blue (weighted)
+      [41,  171, 226],
+    ];
+
+    let W, H, paths, particles;
+
+    function snap(v) { return Math.round(v / GRID) * GRID; }
+
+    function buildPaths() {
+      paths     = [];
+      particles = [];
+
+      // Spawn origins: left→right, right→left, top→down, bottom→up
+      const origins = [
+        // left edge, travel right
+        ...Array.from({ length: 4 }, (_, k) => ({
+          x: -GRID * 2,
+          y: snap(GRID * 2 + k * (H / 4) + (Math.random() - .5) * GRID * 3),
+          dx: 1, dy: 0
+        })),
+        // right edge, travel left
+        ...Array.from({ length: 4 }, (_, k) => ({
+          x: W + GRID * 2,
+          y: snap(GRID * 2 + k * (H / 4) + (Math.random() - .5) * GRID * 3),
+          dx: -1, dy: 0
+        })),
+        // top edge, travel down
+        ...Array.from({ length: 3 }, (_, k) => ({
+          x: snap(GRID * 3 + k * (W / 3) + (Math.random() - .5) * GRID * 4),
+          y: -GRID * 2,
+          dx: 0, dy: 1
+        })),
+        // bottom edge, travel up
+        ...Array.from({ length: 3 }, (_, k) => ({
+          x: snap(GRID * 3 + k * (W / 3) + (Math.random() - .5) * GRID * 4),
+          y: H + GRID * 2,
+          dx: 0, dy: -1
+        })),
+      ];
+
+      for (let i = 0; i < origins.length; i++) {
+        const o    = origins[i];
+        const path = [];
+        let x = o.x, y = o.y;
+        let primary = o.dx !== 0 ? 'h' : 'v';   // h = horizontal mover, v = vertical mover
+
+        path.push({ x, y });
+
+        const steps = 18 + Math.floor(Math.random() * 10);
+        for (let s = 0; s < steps; s++) {
+          const r = Math.random();
+          if (primary === 'h') {
+            const xDir = o.dx;
+            if (r < 0.55) {
+              x = snap(x + xDir * GRID * (Math.floor(Math.random() * 5) + 2));
+            } else if (r < 0.77) {
+              y = snap(Math.max(GRID, y - GRID * (Math.floor(Math.random() * 3) + 1)));
+            } else {
+              y = snap(Math.min(H - GRID, y + GRID * (Math.floor(Math.random() * 3) + 1)));
+            }
+          } else {
+            const yDir = o.dy;
+            if (r < 0.55) {
+              y = snap(y + yDir * GRID * (Math.floor(Math.random() * 5) + 2));
+            } else if (r < 0.77) {
+              x = snap(Math.max(GRID, x - GRID * (Math.floor(Math.random() * 3) + 1)));
+            } else {
+              x = snap(Math.min(W - GRID, x + GRID * (Math.floor(Math.random() * 3) + 1)));
+            }
+          }
+          path.push({ x, y });
+        }
+        paths.push(path);
+
+        // Particle on every other origin
+        if (i % 2 === 0) {
+          const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+          particles.push({
+            pathIdx: i,
+            t:       Math.random(),
+            speed:   0.00008 + Math.random() * 0.0001,
+            color:   col,
+            size:    2,
+            trail:   [],
+            trailLen: 100,
+          });
+        }
+      }
+    }
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      buildPaths();
+    }
+
+    function pathLength(path) {
+      let len = 0;
+      for (let i = 0; i < path.length - 1; i++) {
+        const dx = path[i+1].x - path[i].x;
+        const dy = path[i+1].y - path[i].y;
+        len += Math.sqrt(dx*dx + dy*dy);
+      }
+      return len;
+    }
+
+    function pointAt(path, t) {
+      const total = pathLength(path);
+      let target = t * total, dist = 0;
+      for (let i = 0; i < path.length - 1; i++) {
+        const dx = path[i+1].x - path[i].x;
+        const dy = path[i+1].y - path[i].y;
+        const len = Math.sqrt(dx*dx + dy*dy);
+        if (dist + len >= target) {
+          const f = (target - dist) / len;
+          return { x: path[i].x + dx * f, y: path[i].y + dy * f };
+        }
+        dist += len;
+      }
+      return path[path.length - 1];
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Draw static lines + nodes
+      for (const path of paths) {
+        ctx.beginPath();
+        ctx.moveTo(path[0].x, path[0].y);
+        for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
+        ctx.strokeStyle = 'rgba(41,171,226,0.04)';
+        ctx.lineWidth   = 1;
+        ctx.stroke();
+
+        for (const pt of path) {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(41,171,226,0.08)';
+          ctx.fill();
+        }
+      }
+
+      // Animate particles
+      for (const p of particles) {
+        p.t = (p.t + p.speed) % 1;
+        const pos = pointAt(paths[p.pathIdx], p.t);
+        const [r,g,b] = p.color;
+
+        // Store trail history
+        p.trail.push({ x: pos.x, y: pos.y });
+        if (p.trail.length > p.trailLen) p.trail.shift();
+
+        // Draw trail
+        for (let i = 0; i < p.trail.length - 1; i++) {
+          const frac  = i / p.trail.length;
+          const alpha = frac * 0.22;
+          const size  = frac * p.size * 0.7;
+          ctx.beginPath();
+          ctx.arc(p.trail[i].x, p.trail[i].y, Math.max(0.5, size), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+          ctx.fill();
+        }
+
+        // Outer glow
+        const grd = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 10);
+        grd.addColorStop(0,   `rgba(${r},${g},${b},0.3)`);
+        grd.addColorStop(0.4, `rgba(${r},${g},${b},0.08)`);
+        grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},0.6)`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  })();
+</script>
+</body>
+</html>
