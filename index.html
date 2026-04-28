@@ -49,36 +49,11 @@
     }
     .nav__logo { height: 36px; width: auto; opacity: 0.75; display: block; }
 
-    /* ── ANIMATED BACKGROUND ORBS ── */
-    .hero-bg {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    /* ── CIRCUIT BACKGROUND ── */
+    #hero-canvas {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      width: 100%; height: 100%;
     }
-    .orb {
-      position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0;
-      animation: orb-fade-in 2s ease forwards;
-    }
-    .orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(41,171,226,.18) 0%, transparent 70%);
-      top: -200px; left: -150px;
-      animation: orb-fade-in 2s ease forwards, orb-drift-1 18s ease-in-out infinite alternate;
-    }
-    .orb-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(59,130,246,.12) 0%, transparent 70%);
-      top: 100px; right: -100px;
-      animation: orb-fade-in 2.5s ease forwards, orb-drift-2 22s ease-in-out infinite alternate;
-    }
-    .orb-3 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(41,171,226,.08) 0%, transparent 70%);
-      bottom: -100px; left: 40%;
-      animation: orb-fade-in 3s ease forwards, orb-drift-3 26s ease-in-out infinite alternate;
-    }
-    @keyframes orb-fade-in { to { opacity: 1; } }
-    @keyframes orb-drift-1 { 0%{transform:translate(0,0)} 100%{transform:translate(60px,80px)} }
-    @keyframes orb-drift-2 { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,60px)} }
-    @keyframes orb-drift-3 { 0%{transform:translate(0,0)} 100%{transform:translate(40px,-60px)} }
 
     /* ── ABOVE-FOLD SPLIT ── */
     .above-fold {
@@ -463,12 +438,7 @@
   <img src="Comsure Logo PNG-01.png" alt="ComSure" class="nav__logo" />
 </nav>
 
-<!-- ─── ANIMATED BACKGROUND ─── -->
-<div class="hero-bg">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
+<canvas id="hero-canvas"></canvas>
 
 <!-- ─── ABOVE FOLD: HEADLINE + FORM ─── -->
 <div class="above-fold">
@@ -831,6 +801,130 @@
     // Redirect immediately to thank-you
     window.location.href = 'https://info.comsure.uk/thank-you/';
   }
+</script>
+
+<script>
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); generateLines(); });
+
+  const COLORS = ['#29ABE2','#3B82F6'];
+  const lines = [];
+
+  function makeLine() {
+    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const path  = [];
+    let x = Math.random() * canvas.width  * 0.7;
+    let y = Math.random() * canvas.height;
+    path.push({x, y});
+    let dir = 'right';
+    const segs = Math.floor(Math.random() * 3) + 2;
+    for (let s = 0; s < segs; s++) {
+      const len = Math.random() * 160 + 80;
+      if (dir === 'right')   { x = Math.min(x + len, canvas.width  + 50); }
+      else if (dir === 'up') { y = Math.max(y - len, -50); }
+      else                   { y = Math.min(y + len, canvas.height + 50); }
+      path.push({x, y});
+      if (dir === 'right') dir = Math.random() > 0.5 ? 'up' : 'down';
+      else dir = 'right';
+    }
+    return {
+      path, color,
+      alpha: Math.random() * 0.12 + 0.04,
+      progress: Math.random(),
+      speed: Math.random() * 0.0004 + 0.0002,
+      delay: Math.random() * 500
+    };
+  }
+
+  function generateLines() {
+    lines.length = 0;
+    const count = Math.min(12, Math.floor(canvas.width / 100));
+    for (let i = 0; i < count; i++) lines.push(makeLine());
+  }
+  generateLines();
+
+  function tipPoint(path, progress) {
+    let total = 0;
+    for (let i = 1; i < path.length; i++)
+      total += Math.abs(path[i].x - path[i-1].x) + Math.abs(path[i].y - path[i-1].y);
+    let remaining = total * progress, x = path[0].x, y = path[0].y;
+    for (let i = 1; i < path.length; i++) {
+      const seg = Math.abs(path[i].x - path[i-1].x) + Math.abs(path[i].y - path[i-1].y);
+      if (remaining <= seg) {
+        const t = remaining / seg;
+        return { x: path[i-1].x + (path[i].x - path[i-1].x) * t, y: path[i-1].y + (path[i].y - path[i-1].y) * t };
+      }
+      remaining -= seg; x = path[i].x; y = path[i].y;
+    }
+    return {x, y};
+  }
+
+  function drawLine(line) {
+    if (line.delay > 0) { line.delay--; return; }
+    line.progress = Math.min(line.progress + line.speed, 1);
+    if (line.progress >= 1) { Object.assign(line, makeLine(), { progress: 0 }); return; }
+
+    const path = line.path;
+    let total = 0;
+    for (let i = 1; i < path.length; i++)
+      total += Math.abs(path[i].x - path[i-1].x) + Math.abs(path[i].y - path[i-1].y);
+    const drawLen = total * line.progress;
+
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth   = 1;
+    ctx.globalAlpha = line.alpha;
+    ctx.shadowBlur  = 4;
+    ctx.shadowColor = line.color;
+
+    let drawn = 0;
+    for (let i = 1; i < path.length; i++) {
+      const seg = Math.abs(path[i].x - path[i-1].x) + Math.abs(path[i].y - path[i-1].y);
+      if (drawn + seg <= drawLen) {
+        ctx.lineTo(path[i].x, path[i].y);
+        drawn += seg;
+        // node dot
+        ctx.globalAlpha = line.alpha * 1.4;
+        ctx.fillStyle   = line.color;
+        ctx.shadowBlur  = 4;
+        ctx.beginPath(); ctx.arc(path[i].x, path[i].y, 1.5, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(path[i].x, path[i].y);
+        ctx.strokeStyle = line.color; ctx.globalAlpha = line.alpha;
+      } else {
+        const t  = (drawLen - drawn) / seg;
+        const ex = path[i-1].x + (path[i].x - path[i-1].x) * t;
+        const ey = path[i-1].y + (path[i].y - path[i-1].y) * t;
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+        // glowing tip dot
+        ctx.globalAlpha = line.alpha * 2;
+        ctx.fillStyle   = '#ffffff';
+        ctx.shadowBlur  = 6; ctx.shadowColor = line.color;
+        ctx.beginPath(); ctx.arc(ex, ey, 2, 0, Math.PI*2); ctx.fill();
+        ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+        return;
+      }
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    lines.forEach(drawLine);
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
 </script>
 </body>
 </html>
