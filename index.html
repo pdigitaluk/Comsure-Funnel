@@ -792,29 +792,6 @@
     // Fire Meta Pixel Lead event
     if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
-    // Build results screen
-    const labels = {
-      payments: { icon: '💳', text: 'Card payments would stop' },
-      phones:   { icon: '📞', text: 'Phone lines would go down' },
-      bookings: { icon: '💻', text: 'Bookings & software would fail' },
-      security: { icon: '🔒', text: 'CCTV & security would go dark' },
-      unsure:   { icon: '⚠️', text: 'Unknown systems at risk' }
-    };
-    const c = document.getElementById('resItems');
-    c.innerHTML = '';
-    selPains.forEach(p => {
-      if (labels[p]) c.innerHTML += `<div class="res-item"><span class="ri-icon">${labels[p].icon}</span><span class="ri-text">${labels[p].text}</span></div>`;
-    });
-
-    document.getElementById('riskLabel').textContent = riskLevel;
-    document.getElementById('riskHeading').textContent = riskLevel === 'HIGH' ? 'Your business is exposed' : 'Your business is at risk';
-    document.getElementById('resConfirm').textContent = `✓ Report sending to ${email}`;
-
-    // Show results screen
-    document.querySelectorAll('.msf-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('stepResults').classList.add('active');
-    for (let i = 1; i <= 3; i++) document.getElementById('prog' + i).classList.add('active');
-
     // Redirect immediately to thank-you
     window.location.href = 'https://info.comsure.uk/thank-you/';
   }
