@@ -482,9 +482,6 @@
     <div class="msf">
 
       <div class="msf-header">
-        <div class="msf-shield">
-          <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12.99H5V8.26l7-3.89v8.62z"/></svg>
-        </div>
         <h2>See your risk in 30 seconds</h2>
         <p>Free assessment &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Results same day</p>
       </div>
@@ -546,27 +543,29 @@
           <button class="msf-btn" id="btn2" disabled onclick="goStep(3)">Next →</button>
         </div>
 
-        <!-- Step 3: Phone -->
+        <!-- Step 3: Contact details -->
         <div class="msf-step" id="step3">
           <div class="msf-step-label">Step 3 of 3</div>
-          <div class="msf-question">Almost done — where should we send your results?</div>
+          <div class="msf-question">Where should we send your report?</div>
           <div class="msf-field">
-            <label>📱 Phone number</label>
-            <input type="tel" id="phoneNum" placeholder="07700 900 000" oninput="checkStep3()">
-            <div class="field-sub">We'll call you with your risk score — usually same day</div>
+            <label>Email address</label>
+            <input type="email" id="contactEmail" placeholder="you@yourbusiness.co.uk" oninput="checkStep3()">
+            <div class="field-sub">We'll send your full risk breakdown here — free, no commitment</div>
           </div>
-          <button class="msf-btn" id="btn3" disabled onclick="submitForm()">See My Risk Score →</button>
+          <div class="msf-field">
+            <label>Phone number <span style="opacity:.5;font-weight:400;font-size:13px;">(optional)</span></label>
+            <input type="tel" id="phoneNum" placeholder="07700 900 000">
+          </div>
+          <button class="msf-btn" id="btn3" disabled onclick="submitForm()">Send My Risk Report →</button>
         </div>
 
         <!-- Results -->
         <div class="msf-step" id="stepResults">
-          <div class="msf-results">
-            <div class="risk-badge"><span class="rdot"></span> Risk Level: HIGH</div>
-            <h3>Your business is exposed</h3>
-            <p class="res-sub">Based on your answers, an internet outage would immediately affect:</p>
-            <div class="res-items" id="resItems"></div>
-            <p class="res-sub"><strong style="color:#F1F5F9">Most businesses like yours lose over £500 per outage.</strong> One of our team will be in touch shortly.</p>
-            <div class="msf-confirm">✓ We've got your details — expect a call from us today</div>
+          <div class="msf-results" style="text-align:center;padding:20px 0;">
+            <div class="risk-badge" id="riskBadge" style="margin:0 auto 20px;"><span class="rdot"></span> Risk Level: <span id="riskLabel">HIGH</span></div>
+            <h3 id="riskHeading" style="margin-bottom:10px;">Your business is exposed</h3>
+            <p class="res-sub" style="margin-bottom:24px;">Your full breakdown is on its way — check your inbox.</p>
+            <div class="msf-confirm" id="resConfirm">✓ Sending your report now...</div>
           </div>
         </div>
 
@@ -752,7 +751,9 @@
   }
 
   function checkStep3() {
-    document.getElementById('btn3').disabled = document.getElementById('phoneNum').value.trim().length < 6;
+    const email = document.getElementById('contactEmail').value.trim();
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    document.getElementById('btn3').disabled = !validEmail;
   }
 
   function goStep(n) {
@@ -766,32 +767,32 @@
   function submitForm() {
     const btn = document.getElementById('btn3');
     btn.disabled = true;
-    btn.textContent = 'Submitting...';
+    btn.textContent = 'Sending your report...';
 
-    const phone = document.getElementById('phoneNum').value.trim();
-    const name  = document.getElementById('bizName').value.trim();
+    const email       = document.getElementById('contactEmail').value.trim();
+    const phone       = document.getElementById('phoneNum').value.trim();
+    const bizName     = document.getElementById('bizName').value.trim();
+    const riskLevel   = selPains.size >= 3 ? 'HIGH' : selPains.size >= 1 ? 'MEDIUM' : 'LOW';
 
     // Send to GHL webhook
     fetch('https://services.leadconnectorhq.com/hooks/h8Ve813h861eydv8goL4/webhook-trigger/334dfeb5-2486-49cb-9c15-b12b1d74854e', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name:         name,
+        email:        email,
         phone:        phone,
+        name:         bizName,
         businessType: selBiz,
         painPoints:   Array.from(selPains).join(', '),
+        riskLevel:    riskLevel,
         source:       'ComSure Funnel'
       })
-    }).catch(() => {}); // fail silently — still show results
+    }).catch(() => {});
 
     // Fire Meta Pixel Lead event
     if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
-    // Show results screen
-    document.querySelectorAll('.msf-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('stepResults').classList.add('active');
-    for (let i = 1; i <= 3; i++) document.getElementById('prog' + i).classList.add('active');
-
+    // Build results screen
     const labels = {
       payments: { icon: '💳', text: 'Card payments would stop' },
       phones:   { icon: '📞', text: 'Phone lines would go down' },
@@ -805,8 +806,17 @@
       if (labels[p]) c.innerHTML += `<div class="res-item"><span class="ri-icon">${labels[p].icon}</span><span class="ri-text">${labels[p].text}</span></div>`;
     });
 
-    // Redirect to thank-you after a short delay so they see the results
-    setTimeout(() => { window.location.href = '/thank-you'; }, 3000);
+    document.getElementById('riskLabel').textContent = riskLevel;
+    document.getElementById('riskHeading').textContent = riskLevel === 'HIGH' ? 'Your business is exposed' : 'Your business is at risk';
+    document.getElementById('resConfirm').textContent = `✓ Report sending to ${email}`;
+
+    // Show results screen
+    document.querySelectorAll('.msf-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('stepResults').classList.add('active');
+    for (let i = 1; i <= 3; i++) document.getElementById('prog' + i).classList.add('active');
+
+    // Redirect immediately to thank-you
+    window.location.href = '/thank-you';
   }
 </script>
 </body>
