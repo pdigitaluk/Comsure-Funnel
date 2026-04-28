@@ -180,7 +180,7 @@
     .msf-progress { display: flex; gap: 6px; padding: 16px 28px 0; }
     .msf-seg { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); transition: background .4s; }
     .msf-seg.active { background: #3B82F6; }
-    .msf-body { padding: 20px 28px 28px; min-height: 360px; }
+    .msf-body { padding: 20px 28px 28px; }
     .msf-step { display: none; animation: msfIn .3s ease; }
     .msf-step.active { display: block; }
     @keyframes msfIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
@@ -374,42 +374,82 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .above-fold { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 56px; }
+      .above-fold { grid-template-columns: 1fr; gap: 28px; padding: 32px 20px 48px; }
       .left-col { padding-top: 0; order: 2; }
       .right-col { order: 1; }
-      .subline { max-width: 100%; font-size: 15px; }
-      /* Hide trust list and social proof on tablet — form is right there */
+      .subline { max-width: 100%; font-size: 15px; margin-bottom: 0; }
       .trust-list { display: none; }
       .social-proof { display: none; }
-      /* Compact headline on tablet */
-      .headline { font-size: clamp(22px, 5vw, 34px); margin-bottom: 14px; }
-      .tag { font-size: 10px; margin-bottom: 20px; }
+      .headline { font-size: clamp(22px, 5vw, 34px); margin-bottom: 12px; }
+      .tag { font-size: 10px; margin-bottom: 16px; }
       .solution-flow { grid-template-columns: 1fr; gap: 0; }
-      .flow-arrow { transform: rotate(90deg); padding: 8px 0; }
+      .flow-arrow { transform: rotate(90deg); padding: 6px 0; }
       .solution-bullets { grid-template-columns: 1fr; }
+      .section { padding: 72px 24px; }
+      .close-cta { padding: 80px 24px; }
     }
     @media (max-width: 600px) {
+      /* ── Nav ── */
       .nav { padding: 14px 16px; }
       .nav__logo { height: 26px; }
-      .above-fold { padding: 24px 16px 48px; gap: 20px; }
-      /* On mobile: form first, then just headline + subline — no long copy */
-      .left-col { order: 2; }
+
+      /* ── Hero ── */
+      .above-fold { padding: 20px 16px 36px; gap: 20px; }
+      .left-col { order: 2; padding-bottom: 8px; }
       .right-col { order: 1; }
-      .headline { font-size: clamp(20px, 6.5vw, 28px); margin-bottom: 10px; }
-      .subline { font-size: 14px; margin-bottom: 0; }
-      /* Hide tag on small screens to get to headline faster */
-      .tag { display: none; }
-      .form-card-header h3 { font-size: 13px; }
-      .form-card-header p  { font-size: 11px; }
-      .section { padding: 60px 16px; }
-      .trust-bar { padding: 16px; }
-      .trust-bar__inner { gap: 12px 20px; justify-content: flex-start; }
+      .tag { font-size: 10px; margin-bottom: 14px; padding: 5px 12px; letter-spacing: .05em; }
+      .headline { font-size: clamp(22px, 7vw, 30px); margin-bottom: 10px; line-height: 1.1; }
+      .subline { font-size: 14px; line-height: 1.65; margin-bottom: 0; color: rgba(255,255,255,.4); }
+
+      /* ── Form card ── */
+      .msf { border-radius: 16px; }
+      .msf-header { padding: 20px 20px 16px; }
+      .msf-header h2 { font-size: 17px; }
+      .msf-header p  { font-size: 12px; }
+      .msf-progress { padding: 12px 20px 0; }
+      .msf-body { padding: 16px 20px 20px; min-height: unset; }
+      .msf-step-label { padding-bottom: 8px; }
+      .msf-question { font-size: 15px; margin-bottom: 14px; }
+      .msf-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+      .msf-opt { padding: 14px 10px; border-radius: 10px; }
+      .msf-opt .opt-icon { font-size: 20px; }
+      .msf-opt .opt-label { font-size: 12px; }
+      .msf-list { gap: 8px; }
+      .msf-row { padding: 12px 14px; }
+      .msf-row .row-label { font-size: 14px; }
+      .msf-field { margin-bottom: 14px; }
+      .msf-field input { padding: 13px 14px; font-size: 16px; }
+      .msf-btn { padding: 15px; font-size: 15px; }
+      .msf-footer { padding: 12px 20px; }
+
+      /* ── Sections ── */
+      .section { padding: 56px 16px; }
+      .section__title { font-size: clamp(22px, 6vw, 30px); }
+      .section__sub { font-size: 15px; }
+      .trust-bar { padding: 14px 16px; }
+      .trust-bar__inner { gap: 10px 16px; justify-content: flex-start; }
       .tbar-item { font-size: 11px; }
-      .close-cta { padding: 72px 16px; }
-      .close-cta p { font-size: 15px; }
+
+      /* ── Problem cards ── */
+      .problem-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 40px; }
+      .problem-card { padding: 24px 20px; border-radius: 14px; }
+      .problem-card__icon { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 14px; }
+      .problem-card__title { font-size: 15px; }
+      .problem-card__text  { font-size: 13px; }
+
+      /* ── Solution ── */
+      .solution-flow { margin-top: 40px; }
+      .flow-step { padding: 24px 20px; }
+      .flow-step__icon { width: 44px; height: 44px; }
+      .solution-bullets { margin-top: 32px; gap: 10px; }
+      .sol-bullet { padding: 18px; }
+      .sol-bullet__icon { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; }
+
+      /* ── CTA + footer ── */
+      .close-cta { padding: 64px 16px; }
+      .close-cta p { font-size: 15px; margin-bottom: 32px; }
+      .btn-primary { width: 100%; justify-content: center; font-size: 15px; padding: 15px 24px; }
       .footer { padding: 24px 16px; }
-      .problem-grid { grid-template-columns: 1fr; gap: 12px; }
-      .btn-primary { width: 100%; justify-content: center; }
     }
   </style>
 </head>
