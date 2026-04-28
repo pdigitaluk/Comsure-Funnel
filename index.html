@@ -157,6 +157,65 @@
     }
     .tbar-item svg { opacity: .4; flex-shrink: 0; }
 
+    /* ── MULTI-STEP FORM ── */
+    .msf { background: #131B2E; border-radius: 20px; border: 1px solid rgba(255,255,255,.06); overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,.5); }
+    .msf-header { padding: 28px 28px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .msf-shield { width: 44px; height: 44px; background: linear-gradient(135deg,#3B82F6,#2563EB); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .msf-shield svg { width: 22px; height: 22px; fill: white; }
+    .msf-header h2 { font-size: 20px; font-weight: 700; color: #F8FAFC; margin-bottom: 5px; line-height: 1.3; letter-spacing: -.02em; }
+    .msf-header p  { font-size: 13px; color: #94A3B8; }
+    .msf-progress { display: flex; gap: 6px; padding: 16px 28px 0; }
+    .msf-seg { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); transition: background .4s; }
+    .msf-seg.active { background: #3B82F6; }
+    .msf-body { padding: 20px 28px 28px; min-height: 360px; }
+    .msf-step { display: none; animation: msfIn .3s ease; }
+    .msf-step.active { display: block; }
+    @keyframes msfIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .msf-step-label { font-size: 11px; color: #64748B; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 0 0 10px; }
+    .msf-question { font-size: 17px; font-weight: 600; color: #F1F5F9; margin-bottom: 18px; line-height: 1.4; }
+    .msf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .msf-opt { background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.08); border-radius: 12px; padding: 16px 14px; text-align: center; cursor: pointer; transition: all .2s; display: flex; flex-direction: column; align-items: center; gap: 8px; -webkit-tap-highlight-color: transparent; user-select: none; }
+    .msf-opt:hover { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.3); }
+    .msf-opt.selected { background: rgba(59,130,246,.12); border-color: #3B82F6; box-shadow: 0 0 0 1px rgba(59,130,246,.3); }
+    .msf-opt .opt-icon { font-size: 24px; line-height: 1; }
+    .msf-opt .opt-label { font-size: 13px; font-weight: 500; color: #CBD5E1; line-height: 1.3; }
+    .msf-opt.selected .opt-label { color: #F1F5F9; }
+    .msf-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .msf-row { background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.08); border-radius: 12px; padding: 15px 18px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 14px; -webkit-tap-highlight-color: transparent; user-select: none; }
+    .msf-row:hover { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.3); }
+    .msf-row.selected { background: rgba(59,130,246,.12); border-color: #3B82F6; }
+    .msf-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; }
+    .msf-row.selected .msf-check { background: #3B82F6; border-color: #3B82F6; }
+    .msf-check svg { width: 14px; height: 14px; fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .2s; }
+    .msf-row.selected .msf-check svg { opacity: 1; }
+    .msf-row .row-icon { font-size: 20px; }
+    .msf-row .row-label { font-size: 15px; font-weight: 500; color: #CBD5E1; }
+    .msf-row.selected .row-label { color: #F1F5F9; }
+    .msf-hint { font-size: 12px; color: #64748B; margin-bottom: 14px; font-style: italic; }
+    .msf-field { margin-bottom: 18px; }
+    .msf-field label { display: block; font-size: 13px; font-weight: 600; color: #94A3B8; margin-bottom: 8px; letter-spacing: .02em; }
+    .msf-field input { width: 100%; padding: 14px 16px; background: rgba(255,255,255,.05); border: 1.5px solid rgba(255,255,255,.1); border-radius: 10px; color: #F1F5F9; font-size: 16px; font-family: inherit; outline: none; transition: all .2s; }
+    .msf-field input::placeholder { color: #475569; }
+    .msf-field input:focus { border-color: #3B82F6; background: rgba(59,130,246,.06); box-shadow: 0 0 0 3px rgba(59,130,246,.1); }
+    .msf-field .field-sub { font-size: 12px; color: #64748B; margin-top: 6px; }
+    .msf-btn { width: 100%; padding: 16px; background: linear-gradient(135deg,#3B82F6,#2563EB); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all .2s; margin-top: 8px; letter-spacing: .01em; }
+    .msf-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(59,130,246,.3); }
+    .msf-btn:disabled { opacity: .35; cursor: not-allowed; transform: none; box-shadow: none; }
+    .msf-results { text-align: center; padding: 10px 0; }
+    .risk-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; background: rgba(239,68,68,.15); color: #F87171; border: 1px solid rgba(239,68,68,.2); }
+    .risk-badge .rdot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: rdot 1.5s ease infinite; }
+    @keyframes rdot { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .msf-results h3 { font-size: 21px; font-weight: 700; color: #F8FAFC; margin-bottom: 12px; line-height: 1.3; }
+    .msf-results .res-sub { font-size: 14px; color: #94A3B8; line-height: 1.6; margin-bottom: 20px; }
+    .res-items { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; text-align: left; }
+    .res-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(239,68,68,.06); border-radius: 10px; border: 1px solid rgba(239,68,68,.1); }
+    .res-item .ri-icon { font-size: 18px; }
+    .res-item .ri-text { font-size: 14px; color: #E2E8F0; font-weight: 500; }
+    .msf-confirm { font-size: 13px; color: #64748B; margin-top: 14px; line-height: 1.5; }
+    .msf-footer { padding: 14px 28px; border-top: 1px solid rgba(255,255,255,.05); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .msf-footer svg { width: 14px; height: 14px; fill: #475569; }
+    .msf-footer span { font-size: 12px; color: #475569; font-weight: 500; }
+
     /* ── SECTION COMMONS ── */
     .section { padding: 100px 32px; }
     .section--white { background: #fff; color: #09090b; }
@@ -418,36 +477,106 @@
     </div>
   </div>
 
-  <!-- RIGHT: Form -->
+  <!-- RIGHT: Multi-step form -->
   <div class="right-col">
-    <div class="form-card">
-      <div class="form-card-header">
-        <div class="form-card-header-icon">
-          <svg width="18" height="18"><use href="#i-shield"/></svg>
+    <div class="msf">
+
+      <div class="msf-header">
+        <div class="msf-shield">
+          <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12.99H5V8.26l7-3.89v8.62z"/></svg>
         </div>
-        <div>
-          <h3>Get your free business risk assessment</h3>
-          <p>60 seconds &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Results same day</p>
-        </div>
+        <h2>See your risk in 30 seconds</h2>
+        <p>Free assessment &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Results same day</p>
       </div>
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/Qypj0Pra3ullEOhKcuuT"
-        style="width:100%;height:846px;border:none;display:block;"
-        id="inline-Qypj0Pra3ullEOhKcuuT"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="ComSure Form"
-        data-height="846"
-        data-layout-iframe-id="inline-Qypj0Pra3ullEOhKcuuT"
-        data-form-id="Qypj0Pra3ullEOhKcuuT"
-        title="ComSure Form"
-      ></iframe>
-      <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+      <div class="msf-progress">
+        <div class="msf-seg active" id="prog1"></div>
+        <div class="msf-seg" id="prog2"></div>
+        <div class="msf-seg" id="prog3"></div>
+      </div>
+
+      <div class="msf-body">
+
+        <!-- Step 1: Business type -->
+        <div class="msf-step active" id="step1">
+          <div class="msf-step-label">Step 1 of 3</div>
+          <div class="msf-question">What type of business do you run?</div>
+          <div class="msf-grid" id="bizOpts">
+            <div class="msf-opt" data-value="retail" onclick="selectBiz(this)"><span class="opt-icon">🏪</span><span class="opt-label">Retail</span></div>
+            <div class="msf-opt" data-value="hospitality" onclick="selectBiz(this)"><span class="opt-icon">🍽️</span><span class="opt-label">Hospitality</span></div>
+            <div class="msf-opt" data-value="salon" onclick="selectBiz(this)"><span class="opt-icon">💈</span><span class="opt-label">Salon / Barber</span></div>
+            <div class="msf-opt" data-value="office" onclick="selectBiz(this)"><span class="opt-icon">🏢</span><span class="opt-label">Office</span></div>
+            <div class="msf-opt" data-value="healthcare" onclick="selectBiz(this)"><span class="opt-icon">🏥</span><span class="opt-label">Healthcare</span></div>
+            <div class="msf-opt" data-value="other" onclick="selectBiz(this)"><span class="opt-icon">📦</span><span class="opt-label">Other</span></div>
+          </div>
+          <div class="msf-field">
+            <label>What's your business called?</label>
+            <input type="text" id="bizName" placeholder="e.g. The Crown & Anchor" oninput="checkStep1()">
+          </div>
+          <button class="msf-btn" id="btn1" disabled onclick="goStep(2)">Next →</button>
+        </div>
+
+        <!-- Step 2: Pain points -->
+        <div class="msf-step" id="step2">
+          <div class="msf-step-label">Step 2 of 3</div>
+          <div class="msf-question">If your internet dropped right now, what would stop working?</div>
+          <div class="msf-hint">Select all that apply</div>
+          <div class="msf-list" id="painOpts">
+            <div class="msf-row" onclick="togglePain(this)" data-value="payments">
+              <div class="msf-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="row-icon">💳</span><span class="row-label">Card payments</span>
+            </div>
+            <div class="msf-row" onclick="togglePain(this)" data-value="phones">
+              <div class="msf-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="row-icon">📞</span><span class="row-label">Phones / VoIP</span>
+            </div>
+            <div class="msf-row" onclick="togglePain(this)" data-value="bookings">
+              <div class="msf-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="row-icon">💻</span><span class="row-label">Bookings / software</span>
+            </div>
+            <div class="msf-row" onclick="togglePain(this)" data-value="security">
+              <div class="msf-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="row-icon">🔒</span><span class="row-label">CCTV / security</span>
+            </div>
+            <div class="msf-row" onclick="togglePain(this)" data-value="unsure">
+              <div class="msf-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="row-icon">🤷</span><span class="row-label">Not sure</span>
+            </div>
+          </div>
+          <button class="msf-btn" id="btn2" disabled onclick="goStep(3)">Next →</button>
+        </div>
+
+        <!-- Step 3: Phone -->
+        <div class="msf-step" id="step3">
+          <div class="msf-step-label">Step 3 of 3</div>
+          <div class="msf-question">Almost done — where should we send your results?</div>
+          <div class="msf-field">
+            <label>📱 Phone number</label>
+            <input type="tel" id="phoneNum" placeholder="07700 900 000" oninput="checkStep3()">
+            <div class="field-sub">We'll call you with your risk score — usually same day</div>
+          </div>
+          <button class="msf-btn" id="btn3" disabled onclick="submitForm()">See My Risk Score →</button>
+        </div>
+
+        <!-- Results -->
+        <div class="msf-step" id="stepResults">
+          <div class="msf-results">
+            <div class="risk-badge"><span class="rdot"></span> Risk Level: HIGH</div>
+            <h3>Your business is exposed</h3>
+            <p class="res-sub">Based on your answers, an internet outage would immediately affect:</p>
+            <div class="res-items" id="resItems"></div>
+            <p class="res-sub"><strong style="color:#F1F5F9">Most businesses like yours lose over £500 per outage.</strong> One of our team will be in touch shortly.</p>
+            <div class="msf-confirm">✓ We've got your details — expect a call from us today</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="msf-footer">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+        <span>Your details are secure and never shared</span>
+      </div>
+
     </div>
   </div>
 
@@ -599,5 +728,86 @@
   <p>&copy; 2026 ComSure. Business connectivity solutions for UK businesses. &nbsp;·&nbsp; <a href="https://comsure.uk">comsure.uk</a></p>
 </footer>
 
+<script>
+  let selBiz = null;
+  let selPains = new Set();
+
+  function selectBiz(el) {
+    document.querySelectorAll('#bizOpts .msf-opt').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    selBiz = el.dataset.value;
+    checkStep1();
+  }
+
+  function checkStep1() {
+    const name = document.getElementById('bizName').value.trim();
+    document.getElementById('btn1').disabled = !(selBiz && name.length > 0);
+  }
+
+  function togglePain(el) {
+    el.classList.toggle('selected');
+    const v = el.dataset.value;
+    selPains.has(v) ? selPains.delete(v) : selPains.add(v);
+    document.getElementById('btn2').disabled = selPains.size === 0;
+  }
+
+  function checkStep3() {
+    document.getElementById('btn3').disabled = document.getElementById('phoneNum').value.trim().length < 6;
+  }
+
+  function goStep(n) {
+    document.querySelectorAll('.msf-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('prog' + i).classList.toggle('active', i <= n);
+    }
+  }
+
+  function submitForm() {
+    const btn = document.getElementById('btn3');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    const phone = document.getElementById('phoneNum').value.trim();
+    const name  = document.getElementById('bizName').value.trim();
+
+    // Send to GHL webhook
+    fetch('https://services.leadconnectorhq.com/hooks/h8Ve813h861eydv8goL4/webhook-trigger/334dfeb5-2486-49cb-9c15-b12b1d74854e', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:         name,
+        phone:        phone,
+        businessType: selBiz,
+        painPoints:   Array.from(selPains).join(', '),
+        source:       'ComSure Funnel'
+      })
+    }).catch(() => {}); // fail silently — still show results
+
+    // Fire Meta Pixel Lead event
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+
+    // Show results screen
+    document.querySelectorAll('.msf-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('stepResults').classList.add('active');
+    for (let i = 1; i <= 3; i++) document.getElementById('prog' + i).classList.add('active');
+
+    const labels = {
+      payments: { icon: '💳', text: 'Card payments would stop' },
+      phones:   { icon: '📞', text: 'Phone lines would go down' },
+      bookings: { icon: '💻', text: 'Bookings & software would fail' },
+      security: { icon: '🔒', text: 'CCTV & security would go dark' },
+      unsure:   { icon: '⚠️', text: 'Unknown systems at risk' }
+    };
+    const c = document.getElementById('resItems');
+    c.innerHTML = '';
+    selPains.forEach(p => {
+      if (labels[p]) c.innerHTML += `<div class="res-item"><span class="ri-icon">${labels[p].icon}</span><span class="ri-text">${labels[p].text}</span></div>`;
+    });
+
+    // Redirect to thank-you after a short delay so they see the results
+    setTimeout(() => { window.location.href = '/thank-you'; }, 3000);
+  }
+</script>
 </body>
 </html>
