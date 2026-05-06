@@ -32,7 +32,7 @@
   <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@100..900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -58,7 +58,7 @@
     }
     body { overflow-x: hidden; font-family: 'Urbanist', sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; background: #060D18; color: #fff; }
     body::before {
-      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
       background:
         radial-gradient(ellipse 80% 50% at 20% 10%, rgba(41,171,226,.04) 0%, transparent 60%),
         radial-gradient(ellipse 60% 40% at 80% 80%, rgba(41,171,226,.03) 0%, transparent 60%);
@@ -87,9 +87,10 @@
     .hero-wrap {
       position: relative; overflow: hidden;
       background:
-        radial-gradient(ellipse 60% 80% at 25% 50%, rgba(41,171,226,.09) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 60% at 75% 20%, rgba(41,171,226,.05) 0%, transparent 60%),
-        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(6,13,24,.8) 0%, transparent 80%),
+        radial-gradient(ellipse 55% 70% at 18% 45%, rgba(41,171,226,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 78% 15%, rgba(41,171,226,.10) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 60% 90%, rgba(26,138,191,.08) 0%, transparent 65%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(4,11,22,.95) 0%, transparent 70%),
         #060D18;
     }
     #hero-canvas {
@@ -123,7 +124,8 @@
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 11px; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; padding: 6px 14px; border-radius: 6px;
-      background: rgba(217,48,37,.1); border: 1px solid rgba(217,48,37,.2);
+      background: rgba(217,48,37,.12); border: 1px solid rgba(217,48,37,.25);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       color: #f87171; margin-bottom: 32px;
     }
     .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #f87171;
@@ -151,8 +153,9 @@
     .trust-item {
       display: flex; align-items: center; gap: 14px;
       font-size: 14px; color: rgba(255,255,255,.75); font-weight: 500;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(6,13,24,.75);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.07);
       border-radius: 10px;
       padding: 12px 16px;
       letter-spacing: -.01em;
@@ -176,32 +179,6 @@
     }
 
     /* RIGHT — form card */
-    .form-card {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 32px 80px rgba(0,0,0,.4);
-    }
-    .form-card-header {
-      background: #07101d;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      padding: 22px 28px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .form-card-header-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: rgba(41,171,226,.15); border: 1px solid rgba(41,171,226,.2);
-      display: flex; align-items: center; justify-content: center; color: var(--blue);
-      flex-shrink: 0;
-    }
-    .form-card-header h3 {
-      font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -.01em; margin-bottom: 2px;
-    }
-    .form-card-header p { font-size: 12px; color: rgba(255,255,255,.35); font-weight: 500; }
-
-    .form-card iframe {
-      display: block; width: 100%; border: none;
-    }
 
     /* ── TRUST BAR ── */
     .trust-bar {
@@ -330,19 +307,85 @@
     .section__sub { font-size: 17px; line-height: 1.85; color: var(--muted); }
     .section__sub--white { color: rgba(255,255,255,.48); }
 
+    /* ── DOWNTIME STATS ── */
+    .stats-section {
+      padding: 100px 32px;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(41,171,226,.07) 0%, transparent 65%),
+        #060D18;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .stats-section .wrap { text-align: center; }
+
+    .loss-ticker { margin-bottom: 72px; }
+    .loss-ticker__eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.28); margin-bottom: 24px;
+    }
+    .loss-ticker__display {
+      font-size: clamp(48px, 8vw, 88px); font-weight: 600; letter-spacing: -.04em;
+      font-variant-numeric: tabular-nums; color: #fff; line-height: 1; margin-bottom: 18px;
+    }
+    .loss-ticker__display .ticker-val { color: #f05555; }
+    .loss-ticker__sub {
+      font-size: 15px; color: rgba(255,255,255,.32); max-width: 380px; margin: 0 auto;
+      line-height: 1.6;
+    }
+    .loss-ticker__pulse {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      background: #f87171; margin-right: 8px; vertical-align: middle;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    .stat-carousel { max-width: 900px; margin: 0 auto; }
+    .stat-carousel__nav { display: none; }
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; max-width: 900px; margin: 0 auto;
+    }
+    .stat-card {
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-top: 1px solid rgba(255,255,255,.16);
+      border-radius: 16px; padding: 36px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.07);
+      text-align: center;
+    }
+    .stat-card__label {
+      font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: 18px;
+    }
+    .stat-card__value {
+      font-size: clamp(38px, 5vw, 58px); font-weight: 500; letter-spacing: -.035em;
+      color: #fff; line-height: 1; font-variant-numeric: tabular-nums; margin-bottom: 14px;
+    }
+    .stat-card__value em { color: var(--blue); font-style: normal; font-weight: 600; }
+    .unit { font-size: .55em; font-weight: 400; opacity: .7; letter-spacing: 0; }
+    .loss-ticker__display .ticker-suffix { font-size: .75em; }
+    .stat-card__desc { font-size: 13px; color: rgba(255,255,255,.38); line-height: 1.65; text-wrap: balance; }
+    .stat-card__source { font-size: 10px; color: rgba(255,255,255,.15); margin-top: 16px; letter-spacing: .02em; }
+
     /* ── PROBLEM ── */
     .problem-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 16px; margin-top: 64px;
     }
     .problem-card {
-      background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-top: 1px solid rgba(255,255,255,.14);
       border-radius: 16px; padding: 32px 28px;
-      box-shadow: none;
+      box-shadow: 0 4px 24px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
       transition: transform .25s, box-shadow .25s, border-color .25s;
       position: relative; overflow: hidden;
     }
-    .problem-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.35); border-color: rgba(255,255,255,.12); }
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.16);
+    }
     .problem-card__accent { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #dc2626; opacity: 0; transition: opacity .2s; }
     .problem-card:hover .problem-card__accent { opacity: 1; }
     .problem-card__icon {
@@ -367,14 +410,18 @@
       align-items: center; margin-top: 72px;
     }
     .flow-step {
-      background: rgba(255,255,255,.025);
-      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-top: 1px solid rgba(255,255,255,.14);
       border-radius: 16px; padding: 36px 24px; text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
     }
     .flow-step--active {
-      background: rgba(41,171,226,.06);
-      border-color: rgba(41,171,226,.28);
-      box-shadow: 0 0 0 1px rgba(41,171,226,.1), 0 16px 48px rgba(41,171,226,.1);
+      background: rgba(41,171,226,.08);
+      border-color: rgba(41,171,226,.3);
+      border-top-color: rgba(41,171,226,.45);
+      box-shadow: 0 0 0 1px rgba(41,171,226,.12), 0 16px 48px rgba(41,171,226,.12), inset 0 1px 0 rgba(41,171,226,.2);
     }
     .flow-step__icon {
       width: 52px; height: 52px; border-radius: 50%;
@@ -406,11 +453,15 @@
     .solution-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 56px; }
     .sol-bullet {
       display: flex; align-items: flex-start; gap: 16px;
-      background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-top: 1px solid rgba(255,255,255,.14);
       border-radius: 14px; padding: 24px;
-      transition: background .2s, border-color .2s;
+      box-shadow: 0 4px 24px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
     }
-    .sol-bullet:hover { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); }
+    .sol-bullet:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.35); border-color: rgba(255,255,255,.16); }
     .sol-bullet__icon {
       width: 40px; height: 40px; border-radius: 10px;
       background: rgba(41,171,226,.12); color: var(--blue);
@@ -483,6 +534,7 @@
     .reveal {
       opacity: 0;
       transform: translateY(28px);
+      will-change: transform, opacity;
       transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
       transition-delay: var(--reveal-delay, 0ms);
     }
@@ -517,8 +569,8 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .above-fold { grid-template-columns: 1fr; gap: 28px; padding: 32px 20px 48px; }
-      .left-col { padding-top: 0; order: 2; }
-      .right-col { order: 1; }
+      .left-col { padding-top: 0; order: 1; }
+      .right-col { order: 2; }
       .subline { max-width: 100%; font-size: 15px; margin-bottom: 0; }
       .trust-list { display: none; }
       .social-proof { display: none; }
@@ -539,9 +591,9 @@
 
       /* ── Hero ── */
       .above-fold { padding: 20px 16px 36px; gap: 28px; }
-      .left-col { order: 2; padding-bottom: 8px; display: flex; flex-direction: column; align-items: center; }
-      .right-col { order: 1; }
-      .tag { font-size: 10px; margin-bottom: 14px; padding: 5px 12px; letter-spacing: .05em; white-space: normal; text-align: center; }
+      .left-col { order: 1; padding-bottom: 8px; display: flex; flex-direction: column; align-items: center; }
+      .right-col { order: 2; }
+      .tag { display: none; }
       .headline { font-size: clamp(19px, 6vw, 28px); margin-bottom: 10px; line-height: 1.18; text-align: center; }
       .subline { font-size: 14px; line-height: 1.65; margin-bottom: 0; color: rgba(255,255,255,.55); text-align: center; }
 
@@ -572,9 +624,52 @@
       .section__sub { font-size: 15px; }
       .tbar-item { font-size: 11px; padding: 0 24px; }
 
+      /* ── Stats ── */
+      .stats-section { padding: 56px 16px; }
+      .loss-ticker { margin-bottom: 48px; }
+      .loss-ticker__display { letter-spacing: -.03em; font-size: clamp(56px, 14vw, 80px); }
+
+      /* scale-reveal variant for ticker number */
+      .reveal--scale { transform: scale(0.88) translateY(20px); transition-duration: 0.7s; }
+      .reveal--scale.visible { transform: scale(1) translateY(0); }
+
+      /* carousel card entrance — fade up only (no X shift inside scroll container) */
+      .stat-grid .stat-card.reveal { transform: translateY(20px); opacity: 0; }
+      .stat-grid .stat-card.reveal.visible { transform: translateY(0); opacity: 1; }
+
+      /* arrow tap feedback */
+      .stat-carousel__btn:active { transform: scale(0.88); background: rgba(41,171,226,.2); }
+      .stat-carousel__btn { transition: background .2s, color .2s, transform .15s; }
+
+      .stat-grid {
+        display: flex; flex-direction: row;
+        overflow-x: scroll; scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; gap: 0; max-width: 100%;
+      }
+      .stat-grid::-webkit-scrollbar { display: none; }
+      .stat-grid .stat-card {
+        flex: 0 0 100%; scroll-snap-align: start;
+        padding: 28px 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+      }
+      .stat-carousel__nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+      .stat-carousel__btn {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+        color: rgba(255,255,255,.7); display: flex; align-items: center; justify-content: center;
+        cursor: pointer; transition: background .2s, color .2s;
+      }
+      .stat-carousel__btn:hover { background: rgba(41,171,226,.15); color: var(--blue); }
+      .stat-carousel__dots { display: flex; gap: 6px; align-items: center; }
+      .stat-carousel__dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.2); transition: background .3s cubic-bezier(.34,1.56,.64,1), width .3s cubic-bezier(.34,1.56,.64,1), border-radius .3s; }
+      .stat-carousel__dot.active { background: var(--blue); width: 18px; border-radius: 3px; }
+
       /* ── Problem cards ── */
       .problem-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 40px; }
-      .problem-card { padding: 24px 20px; border-radius: 14px; }
+      .problem-card { padding: 24px 20px; border-radius: 14px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .flow-step { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .sol-bullet { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
       .problem-card__icon { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 14px; }
       .problem-card__title { font-size: 15px; }
       .problem-card__text  { font-size: 13px; }
@@ -823,6 +918,61 @@
 </div>
 
 
+<!-- ─── DOWNTIME STATS ─── -->
+<section class="stats-section">
+  <div class="wrap">
+
+    <div class="loss-ticker">
+      <div class="loss-ticker__eyebrow reveal" style="--reveal-delay:0ms">Live estimate — based on Beaming 2022 data</div>
+      <div class="loss-ticker__display reveal reveal--scale" style="--reveal-delay:80ms">
+        <span class="ticker-val" id="tickerVal"><span id="tickerNum">£0</span><span class="ticker-suffix" id="tickerSuffix"></span></span>
+      </div>
+      <div class="loss-ticker__sub reveal" style="--reveal-delay:180ms">
+        <span class="loss-ticker__pulse"></span>
+        <span style="color:#f87171">Lost by UK businesses</span> to internet downtime<br>since you opened this page — and rising
+      </div>
+    </div>
+
+    <div class="stat-carousel">
+      <div class="stat-grid" id="statGrid">
+        <div class="stat-card reveal" style="--reveal-delay:0ms">
+          <div class="stat-card__label">Annual UK Loss</div>
+          <div class="stat-card__value">£<em id="stat1">0</em><span class="unit">bn</span></div>
+          <div class="stat-card__desc">Lost by UK businesses to broadband downtime every single year</div>
+          <div class="stat-card__source">Source: Beaming, 2022</div>
+        </div>
+        <div class="stat-card reveal" style="--reveal-delay:100ms">
+          <div class="stat-card__label">Average Downtime</div>
+          <div class="stat-card__value"><em id="stat2">0</em><span class="unit"> hrs</span></div>
+          <div class="stat-card__desc">The average UK business suffers 33 hours of broadband outage per year</div>
+          <div class="stat-card__source">Source: Beaming, 2023</div>
+        </div>
+        <div class="stat-card reveal" style="--reveal-delay:200ms">
+          <div class="stat-card__label">Monthly Outages</div>
+          <div class="stat-card__value"><em>1 <span class="unit" style="color:#fff">in</span> 3</em></div>
+          <div class="stat-card__desc">UK businesses experience a connectivity loss every single month</div>
+          <div class="stat-card__source">Source: Beaming, 2023</div>
+        </div>
+      </div>
+      <div class="stat-carousel__nav">
+        <button class="stat-carousel__btn" id="statPrev" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 15L7 10L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="stat-carousel__dots" id="statDots">
+          <span class="stat-carousel__dot active"></span>
+          <span class="stat-carousel__dot"></span>
+          <span class="stat-carousel__dot"></span>
+        </div>
+        <button class="stat-carousel__btn" id="statNext" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ─── PROBLEM ─── -->
 <section class="section section--light">
   <div class="wrap">
@@ -1020,6 +1170,8 @@
 
 <script>
 (function(){
+  if (window.matchMedia('(max-width: 600px)').matches) return;
+
   const canvas = document.getElementById('hero-canvas');
   const ctx = canvas.getContext('2d');
 
@@ -1029,7 +1181,11 @@
     canvas.height = wrap.offsetHeight;
   }
   resize();
-  window.addEventListener('resize', () => { resize(); generateLines(); });
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { resize(); generateLines(); }, 150);
+  });
 
   const COLORS = ['#29ABE2','#3B82F6'];
   const lines = [];
@@ -1134,11 +1290,21 @@
     ctx.globalAlpha = 1; ctx.shadowBlur = 0;
   }
 
+  let animating = true;
   function loop() {
+    if (!animating) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.shadowBlur = 0;
     lines.forEach(drawLine);
     requestAnimationFrame(loop);
   }
+
+  const heroVis = new IntersectionObserver(function(entries) {
+    animating = entries[0].isIntersecting;
+    if (animating) loop();
+  }, { threshold: 0 });
+  heroVis.observe(canvas.parentElement);
+
   loop();
 })();
 </script>
@@ -1161,6 +1327,9 @@
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
         io.unobserve(entry.target);
+        entry.target.addEventListener('transitionend', function() {
+          entry.target.style.willChange = 'auto';
+        }, { once: true });
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -1175,13 +1344,20 @@
       el.style.transition = 'none';
       el.classList.add('visible', 'loaded');
     });
+    document.querySelectorAll('.counter').forEach(function(el) {
+      el.textContent = el.dataset.target;
+    });
+    var s1 = document.getElementById('stat1'); if (s1) s1.textContent = '26.7';
+    var s2 = document.getElementById('stat2'); if (s2) s2.textContent = '33';
+    var tn = document.getElementById('tickerNum'); if (tn) tn.textContent = '£0';
   }
 
   // Scroll progress bar
   const progressBar = document.querySelector('.scroll-progress');
   if (progressBar) {
     window.addEventListener('scroll', function() {
-      const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = scrollable > 0 ? window.scrollY / scrollable : 0;
       progressBar.style.transform = 'scaleX(' + Math.min(Math.max(pct, 0), 1) + ')';
     }, { passive: true });
   }
@@ -1203,6 +1379,130 @@
     });
   }, { threshold: 0.6 });
   document.querySelectorAll('.counter').forEach(function(el) { counterIO.observe(el); });
+
+  // ── Stat card carousel (mobile only) ─────────────────────────────────────
+  (function() {
+    var grid = document.getElementById('statGrid');
+    var prevBtn = document.getElementById('statPrev');
+    var nextBtn = document.getElementById('statNext');
+    var dots = document.querySelectorAll('.stat-carousel__dot');
+    if (!grid || !prevBtn) return;
+
+    var current = 0;
+    var cards = grid.querySelectorAll('.stat-card');
+    var total = cards.length;
+
+    function isMobile() { return window.innerWidth <= 600; }
+
+    function goTo(idx) {
+      current = Math.max(0, Math.min(idx, total - 1));
+      var cardWidth = cards[0].offsetWidth;
+      grid.scrollTo({ left: current * cardWidth, behavior: 'smooth' });
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+
+    prevBtn.addEventListener('click', function() { goTo((current - 1 + total) % total); resetAuto(); });
+    nextBtn.addEventListener('click', function() { goTo((current + 1) % total); resetAuto(); });
+
+    // sync dots on touch swipe
+    grid.addEventListener('scroll', function() {
+      if (!isMobile()) return;
+      var idx = Math.round(grid.scrollLeft / cards[0].offsetWidth);
+      if (idx !== current) {
+        current = idx;
+        dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+      }
+    }, { passive: true });
+
+    // pause autoplay on touch, resume after
+    grid.addEventListener('touchstart', function() { clearInterval(autoTimer); }, { passive: true });
+    grid.addEventListener('touchend', function() { resetAuto(); }, { passive: true });
+
+    // autoplay — advance every 4s, mobile only
+    var autoTimer;
+    function startAuto() {
+      if (!isMobile()) return;
+      autoTimer = setInterval(function() { goTo((current + 1) % total); }, 4000);
+    }
+    function resetAuto() { clearInterval(autoTimer); startAuto(); }
+    startAuto();
+  })();
+
+  // ── Live loss ticker ──────────────────────────────────────────────────────
+  // £26.7bn/year ÷ 365 ÷ 24 ÷ 3600 ≈ £846.35/second
+  (function() {
+    var tickerNum = document.getElementById('tickerNum');
+    var tickerSuf = document.getElementById('tickerSuffix');
+    if (!tickerNum) return;
+    var perSecond = 26700000000 / 365 / 24 / 3600;
+    var rafId = null;
+    var epoch = null;
+
+    function tick() {
+      var elapsed = (Date.now() - epoch) / 1000;
+      var v = elapsed * perSecond;
+      if (v >= 1000000) {
+        tickerNum.textContent = '£' + (v / 1000000).toFixed(2);
+        tickerSuf.textContent = 'm';
+      } else if (v >= 1000) {
+        tickerNum.textContent = '£' + (v / 1000).toFixed(1);
+        tickerSuf.textContent = 'k';
+      } else {
+        tickerNum.textContent = '£' + Math.floor(v).toLocaleString('en-GB');
+        tickerSuf.textContent = '';
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    var tickerObs = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting) return;
+      epoch = Date.now();
+      if (rafId) cancelAnimationFrame(rafId);
+      tick();
+      tickerObs.disconnect();
+    }, { threshold: 0.2 });
+    tickerObs.observe(document.querySelector('.stats-section') || tickerNum);
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      } else if (epoch) {
+        tick();
+      }
+    });
+  })();
+
+  // ── Stat count-up: stat1 (£0 → 26.7) and stat2 (0 → 33) ─────────────────
+  (function() {
+    function animateDecimal(el, target, decimals, duration) {
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        var val = eased * target;
+        el.textContent = decimals ? val.toFixed(decimals) : Math.round(val);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    var stat1 = document.getElementById('stat1');
+    var stat2 = document.getElementById('stat2');
+
+    var statObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.id;
+        if (id === 'stat1') animateDecimal(entry.target, 26.7, 1, 1800);
+        if (id === 'stat2') animateDecimal(entry.target, 33, 0, 1400);
+        statObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+
+    if (stat1) statObs.observe(stat1);
+    if (stat2) statObs.observe(stat2);
+  })();
 })();
 </script>
 </body>
