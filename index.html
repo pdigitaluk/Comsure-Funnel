@@ -1158,13 +1158,10 @@
         riskLevel:    riskLevel,
         source:       'ComSure Funnel'
       })
-    }).catch(() => {});
-
-    // Fire Meta Pixel Lead event
-    if (typeof fbq !== 'undefined') fbq('track', 'Lead');
-
-    // Redirect immediately to thank-you
-    window.location.href = 'https://info.comsure.uk/thank-you/';
+    }).catch(() => {}).finally(() => {
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+      window.location.href = 'https://info.comsure.uk/thank-you/';
+    });
   }
 </script>
 
